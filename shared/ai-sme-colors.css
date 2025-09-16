@@ -1,0 +1,78 @@
+/*
+  AI-SME Website Color Palette
+  This file establishes the standard color scheme for the AI-SME website initiatives.
+  Use these CSS variables to ensure all new and existing pages have a consistent look and feel.
+*/
+
+:root {
+  /* Core Color Palette */
+  --ai-bg: #F8F7F4;          /* soft off-white */
+  --ai-card: #FFFFFF;         /* pure white */
+  --ai-text: #4A4A4A;          /* dark gray */
+  --ai-heading: #111827;      /* darker gray */
+  --ai-accent: #4A90E2;        /* blue */
+  --ai-accent-hover: #357ABD;  /* a slightly darker blue for hover states */
+
+  /* Border & Shadow */
+  --ai-border: #E5E7EB;       /* light gray for borders */
+  --ai-shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --ai-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
+}
+
+/*
+  Utility Classes
+  Use these classes in your HTML to quickly apply the color scheme.
+  These are provided as a convenience and can be expanded as needed.
+  For more complex components, it is recommended to use the variables directly in your CSS.
+*/
+
+/* Background and Text Colors */
+.bg-ai-background { background-color: var(--ai-bg); }
+.bg-ai-card { background-color: var(--ai-card); }
+.text-ai-text { color: var(--ai-text); }
+.text-ai-heading { color: var(--ai-heading); }
+.text-ai-accent { color: var(--ai-accent); }
+a.text-ai-accent:hover { color: var(--ai-accent-hover); }
+
+/* Buttons */
+.btn-ai-primary {
+  background-color: var(--ai-accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+.btn-ai-primary:hover {
+  background-color: var(--ai-accent-hover);
+}
+
+.btn-ai-secondary {
+  background-color: transparent;
+  color: var(--ai-accent);
+  border: 1px solid var(--ai-accent);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn-ai-secondary:hover {
+  background-color: var(--ai-accent);
+  color: white;
+}
+
+/* Cards */
+.card-ai {
+  background-color: var(--ai-card);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid var(--ai-border);
+  box-shadow: var(--ai-shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-ai:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ai-shadow-md);
+}

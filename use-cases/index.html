@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Success Stories - Randstad GBS Learning Hub (Fixed)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../shared/hub-button.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .google-sans { font-family: 'Google Sans', sans-serif; }
+        body { font-family: 'Roboto', sans-serif; }
+        .use-case-card { border: 1px solid #dadce0; transition: transform 0.2s ease, box-shadow 0.2s ease; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); }
+        .use-case-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .impact-stat { background: linear-gradient(135deg, #1967d2 0%, #4285f4 100%); color: white; }
+        .category-badge { background: #e8f0fe; color: #1967d2; }
+        .before-after { background: linear-gradient(90deg, #fef7f0 0%, #f0f9ff 100%); }
+        .demo-section { background: linear-gradient(135deg, #f8f9fa 0%, #e8f0fe 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="google-sans text-xl font-bold text-gray-900">Randstad GBS Learning Hub</a>
+                <a href="/" class="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200">← Back to Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <header class="text-center mb-16">
+            <h1 class="google-sans text-4xl md:text-5xl font-bold text-gray-900 mb-4">AI Success Stories</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">Discover how AI is transforming daily work at Randstad GBS. These real-world examples show measurable impact and practical applications you can implement today.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="impact-stat p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-2">75%</div>
+                    <div class="text-sm opacity-90">Time Saved on Routine Tasks</div>
+                </div>
+                <div class="impact-stat p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-2">3x</div>
+                    <div class="text-sm opacity-90">Faster Candidate Sourcing</div>
+                </div>
+                <div class="impact-stat p-6 rounded-xl">
+                    <div class="text-3xl font-bold mb-2">90%</div>
+                    <div class="text-sm opacity-90">Improved Content Quality</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Filter Categories -->
+            <div id="filters" class="flex flex-wrap justify-center gap-3 mb-12">
+                <button data-filter="all" class="category-filter active px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200">All Stories</button>
+                <button data-filter="sourcing" class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200">Talent Sourcing</button>
+                <button data-filter="content" class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200">Content Creation</button>
+                <button data-filter="analysis" class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200">Data Analysis</button>
+                <button data-filter="communication" class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200">Communication</button>
+            </div>
+
+            <!-- Use Cases Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+
+                <!-- Use Case 1: Candidate Sourcing -->
+                <div id="sourcing-demo" class="use-case-card p-8 rounded-xl case-item" data-category="sourcing">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Talent Sourcing</span>
+                        <span class="text-green-600 font-semibold">75% Time Saved</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">AI-Powered Boolean Search Generation</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 45 minutes to craft complex searches</li>
+                                    <li>• Manual keyword research</li>
+                                    <li>• Trial and error approach</li>
+                                    <li>• Limited search variations</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 10 minutes for comprehensive searches</li>
+                                    <li>• AI suggests relevant keywords</li>
+                                    <li>• Multiple search strings generated</li>
+                                    <li>• Platform-specific optimization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Real Example:</h4>
+                        <div class="bg-gray-50 p-3 rounded text-sm">
+                            <strong>Input:</strong> "Senior Java Developer with microservices experience"<br>
+                            <strong>AI Output:</strong> (Java OR "Java Developer") AND (Senior OR "Sr." OR Lead) AND (microservices OR "micro services" OR "service oriented") AND -junior -intern
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="sourcing-demo">Try This Use Case</button>
+                </div>
+
+                <!-- Use Case 2: Job Description Writing -->
+                <div id="content-demo" class="use-case-card p-8 rounded-xl case-item" data-category="content">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Content Creation</span>
+                        <span class="text-green-600 font-semibold">80% Faster</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">Intelligent Job Description Creation</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 2 hours per job description</li>
+                                    <li>• Copy-paste from old JDs</li>
+                                    <li>• Generic, uninspiring content</li>
+                                    <li>• Inconsistent formatting</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 25 minutes for complete JD</li>
+                                    <li>• Tailored, engaging content</li>
+                                    <li>• Industry-specific language</li>
+                                    <li>• Consistent, professional format</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Success Metrics:</h4>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-green-50 p-3 rounded">
+                                <div class="text-2xl font-bold text-green-600">+40%</div>
+                                <div class="text-xs text-gray-600">Application Rate</div>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded">
+                                <div class="text-2xl font-bold text-blue-600">+60%</div>
+                                <div class="text-xs text-gray-600">Quality Candidates</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="content-demo">Try This Use Case</button>
+                </div>
+
+                <!-- Use Case 3: Candidate Outreach -->
+                <div id="communication-demo" class="use-case-card p-8 rounded-xl case-item" data-category="communication">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Communication</span>
+                        <span class="text-green-600 font-semibold">3x Response Rate</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">Personalized Candidate Outreach</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Generic template messages</li>
+                                    <li>• 15% response rate</li>
+                                    <li>• Time-consuming personalization</li>
+                                    <li>• Inconsistent tone</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Highly personalized messages</li>
+                                    <li>• 45% response rate</li>
+                                    <li>• Automated personalization</li>
+                                    <li>• Professional, engaging tone</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Personalization Elements:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Company Research</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Role Relevance</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Career Progression</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Industry Insights</span>
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="communication-demo">Try This Use Case</button>
+                </div>
+
+                <!-- Use Case 4: Market Analysis -->
+                <div class="use-case-card p-8 rounded-xl case-item" data-category="analysis">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Data Analysis</span>
+                        <span class="text-green-600 font-semibold">90% Accuracy</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">Automated Market Intelligence</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 4 hours for market research</li>
+                                    <li>• Manual data compilation</li>
+                                    <li>• Outdated information</li>
+                                    <li>• Limited scope analysis</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 30 minutes for comprehensive report</li>
+                                    <li>• Real-time data aggregation</li>
+                                    <li>• Current market trends</li>
+                                    <li>• Multi-dimensional analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Analysis Includes:</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div>• Salary benchmarking</div>
+                            <div>• Skill demand trends</div>
+                            <div>• Competitor analysis</div>
+                            <div>• Location insights</div>
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="analysis-demo">Try This Use Case</button>
+                </div>
+
+                <!-- Use Case 5: Interview Preparation -->
+                <div class="use-case-card p-8 rounded-xl case-item" data-category="content">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Content Creation</span>
+                        <span class="text-green-600 font-semibold">85% Better Prep</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">AI-Generated Interview Questions</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Generic interview questions</li>
+                                    <li>• 1 hour prep per interview</li>
+                                    <li>• Limited question variety</li>
+                                    <li>• Inconsistent evaluation</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• Role-specific questions</li>
+                                    <li>• 15 minutes prep time</li>
+                                    <li>• Diverse question types</li>
+                                    <li>• Structured evaluation criteria</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Question Categories:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Technical Skills</span>
+                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">Behavioral</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Situational</span>
+                            <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded text-xs">Culture Fit</span>
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="interview-demo">Try This Use Case</button>
+                </div>
+
+                <!-- Use Case 6: Performance Reports -->
+                <div class="use-case-card p-8 rounded-xl case-item" data-category="analysis">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="category-badge px-3 py-1 rounded-full text-xs font-semibold">Data Analysis</span>
+                        <span class="text-green-600 font-semibold">70% Time Saved</span>
+                    </div>
+                    <h3 class="google-sans text-xl font-bold text-gray-900 mb-3">Automated Performance Reporting</h3>
+                    <div class="before-after p-4 rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-semibold text-red-700 mb-2">❌ Before AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 3 hours for monthly reports</li>
+                                    <li>• Manual data entry</li>
+                                    <li>• Basic charts and graphs</li>
+                                    <li>• Limited insights</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-green-700 mb-2">✅ After AI</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 45 minutes for comprehensive reports</li>
+                                    <li>• Automated data processing</li>
+                                    <li>• Interactive visualizations</li>
+                                    <li>• Predictive insights</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Report Features:</h4>
+                        <div class="grid grid-cols-2 gap-2 text-sm">
+                            <div>• KPI tracking</div>
+                            <div>• Trend analysis</div>
+                            <div>• Goal progress</div>
+                            <div>• Recommendations</div>
+                        </div>
+                    </div>
+                    <button type="button" class="demo-btn w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200" data-demo="reporting-demo">Try This Use Case</button>
+                </div>
+
+            </div>
+
+            <!-- Interactive Demo Section -->
+            <div id="demo-section" class="demo-section mt-16 p-8 rounded-xl hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h2 class="google-sans text-2xl font-bold text-gray-900 mb-4">Try It Yourself</h2>
+                        <p class="text-gray-600">Experience how AI can transform your daily work with this interactive demo.</p>
+                    </div>
+                    <div id="demo-content" class="bg-white p-6 rounded-lg border">
+                        <!-- Demo content will be loaded here -->
+                    </div>
+                    <div class="text-center mt-6">
+                        <button id="demo-close" class="px-6 py-2 text-gray-600 hover:text-gray-800 transition-colors duration-200">Close Demo</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-16 bg-white p-12 rounded-xl border">
+                <h2 class="google-sans text-3xl font-bold text-gray-900 mb-4">Ready to Transform Your Work?</h2>
+                <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">Start implementing these AI solutions in your daily workflow. Access our training programs and prompt libraries to get started.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/gbs-prompts/" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200">Explore Prompt Library</a>
+                    <a href="/rpo-training/" class="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-200">Start Training Program</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="../shared/scripts/footer.js" defer></script>
+    <script src="../shared/scripts/smooth-scroll.js" defer></script>
+
+    <script>
+        // Helper: show/hide demo
+        function showDemo(demoType) {
+            const demoSection = document.getElementById('demo-section');
+            const demoContent = document.getElementById('demo-content');
+            let content = '';
+
+            if (demoType === 'sourcing-demo') {
+                content = `
+                    <h3 class="text-xl font-bold mb-4">Boolean Search Generator Demo</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-2">Job Title:</label>
+                        <input type="text" id="jobTitle" class="w-full p-3 border rounded-lg" placeholder="e.g., Senior Java Developer">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-2">Required Skills (comma separated):</label>
+                        <input type="text" id="skills" class="w-full p-3 border rounded-lg" placeholder="e.g., microservices, Spring Boot, AWS">
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="generateSearchBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Generate Boolean Search</button>
+                        <button id="copySearchBtn" class="bg-gray-100 px-4 py-2 rounded-lg">Copy</button>
+                    </div>
+                    <div id="searchResult" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                        <h4 class="font-semibold mb-2">Generated Search String:</h4>
+                        <pre id="searchStringOutput" class="bg-white p-3 rounded border font-mono text-sm whitespace-pre-wrap"></pre>
+                    </div>
+                `;
+            } else if (demoType === 'content-demo') {
+                content = `
+                    <h3 class="text-xl font-bold mb-4">Job Description Generator Demo</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-2">Position:</label>
+                        <input type="text" id="position" class="w-full p-3 border rounded-lg" placeholder="e.g., Senior Software Engineer">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-2">Company Type:</label>
+                        <select id="companyType" class="w-full p-3 border rounded-lg">
+                            <option>Tech Startup</option>
+                            <option>Enterprise</option>
+                            <option>Consulting</option>
+                            <option>Financial Services</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="generateJDBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Generate Job Description</button>
+                        <button id="copyJDBtn" class="bg-gray-100 px-4 py-2 rounded-lg">Copy</button>
+                    </div>
+                    <div id="jdResult" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                        <h4 class="font-semibold mb-2">Generated Job Description Preview:</h4>
+                        <div id="jdOutput" class="bg-white p-4 rounded border text-sm whitespace-pre-wrap"></div>
+                    </div>
+                `;
+            } else {
+                content = `
+                    <h3 class="text-xl font-bold mb-4">Interactive Demo</h3>
+                    <p class="text-gray-600 mb-4">This demo shows how AI can streamline your workflow. Try the inputs above to see real-time results.</p>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <p class="text-blue-800">💡 <strong>Pro Tip:</strong> The more specific your input, the better the AI-generated output will be!</p>
+                    </div>
+                `;
+            }
+
+            demoContent.innerHTML = content;
+            demoSection.classList.remove('hidden');
+            demoSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Attach event listeners for buttons inside demo content
+            const genSearchBtn = document.getElementById('generateSearchBtn');
+            if (genSearchBtn) genSearchBtn.addEventListener('click', generateSearch);
+
+            const copySearchBtn = document.getElementById('copySearchBtn');
+            if (copySearchBtn) copySearchBtn.addEventListener('click', () => {
+                const out = document.getElementById('searchStringOutput').textContent;
+                if (out) navigator.clipboard?.writeText(out);
+            });
+
+            const genJDBtn = document.getElementById('generateJDBtn');
+            if (genJDBtn) genJDBtn.addEventListener('click', generateJD);
+
+            const copyJDBtn = document.getElementById('copyJDBtn');
+            if (copyJDBtn) copyJDBtn.addEventListener('click', () => {
+                const out = document.getElementById('jdOutput').textContent;
+                if (out) navigator.clipboard?.writeText(out);
+            });
+        }
+
+        function hideDemo() {
+            document.getElementById('demo-section').classList.add('hidden');
+            document.getElementById('demo-content').innerHTML = '';
+        }
+
+        // Boolean search generator
+        function generateSearch() {
+            const jobTitleEl = document.getElementById('jobTitle');
+            if (!jobTitleEl) return;
+            const jobTitle = jobTitleEl.value.trim();
+            const skills = (document.getElementById('skills')?.value || '').trim();
+
+            if (!jobTitle) return;
+
+            // Build search: include the full phrase plus ORs for tokens
+            const tokens = jobTitle.split(/\s+/).filter(Boolean);
+            const phrase = `"${jobTitle}"`;
+            const tokenOr = tokens.map(t => `"${t}"`).join(' OR ');
+            let searchString = `(${phrase}${tokenOr ? ' OR ' + tokenOr : ''})`;
+
+            if (skills) {
+                const skillArray = skills.split(',')
+                    .map(s => s.trim())
+                    .filter(Boolean)
+                    .map(s => `"${s}"`);
+                if (skillArray.length) {
+                    searchString += ` AND (${skillArray.join(' OR ')})`;
+                }
+            }
+
+            searchString += ' -junior -intern';
+
+            const result = document.getElementById('searchResult');
+            const output = document.getElementById('searchStringOutput');
+            if (output) output.textContent = searchString;
+            if (result) result.classList.remove('hidden');
+        }
+
+        // Simple JD generator
+        function generateJD() {
+            const position = (document.getElementById('position')?.value || '').trim();
+            const companyType = (document.getElementById('companyType')?.value || '').trim();
+
+            if (!position) return;
+
+            const jdText = `
+${position}
+
+We are a leading ${companyType.toLowerCase()} looking for a talented ${position} to join our dynamic team.
+
+Key Responsibilities:
+• Lead technical initiatives and drive innovation
+• Collaborate with cross-functional teams
+• Mentor junior team members
+
+Requirements:
+• 5+ years of relevant experience
+• Strong technical and communication skills
+• Bachelor's degree in related field
+            `.trim();
+
+            const result = document.getElementById('jdResult');
+            const out = document.getElementById('jdOutput');
+            if (out) out.textContent = jdText;
+            if (result) result.classList.remove('hidden');
+        }
+
+        // Filter functionality (no inline 'event' usage)
+        function filterCases(category, targetButton) {
+            const cases = document.querySelectorAll('.case-item');
+            const filters = document.querySelectorAll('.category-filter');
+
+            // Update active filter classes
+            filters.forEach(f => f.classList.remove('active'));
+            if (targetButton) targetButton.classList.add('active');
+
+            // Show/hide cases
+            cases.forEach(c => {
+                if (category === 'all' || c.dataset.category === category) {
+                    c.style.display = '';
+                } else {
+                    c.style.display = 'none';
+                }
+            });
+        }
+
+        // DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Styles for filters
+            const style = document.createElement('style');
+            style.textContent = `
+                .category-filter { background: #f1f3f4; color: #5f6368; }
+                .category-filter.active { background: #1967d2; color: white; }
+                .category-filter:hover { background: #e8f0fe; color: #1967d2; }
+                .category-filter.active:hover { background: #1557b0; color: white; }
+            `;
+            document.head.appendChild(style);
+
+            // Wire filter buttons
+            const filterButtons = document.querySelectorAll('#filters .category-filter');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const cat = btn.getAttribute('data-filter') || 'all';
+                    filterCases(cat, btn);
+                });
+            });
+
+            // Wire demo buttons
+            const demoButtons = document.querySelectorAll('.demo-btn');
+            demoButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const demoType = btn.getAttribute('data-demo');
+                    showDemo(demoType);
+                });
+            });
+
+            // Wire close demo
+            const demoClose = document.getElementById('demo-close');
+            if (demoClose) demoClose.addEventListener('click', hideDemo);
+        });
+    </script>
+
+</body>
+</html>

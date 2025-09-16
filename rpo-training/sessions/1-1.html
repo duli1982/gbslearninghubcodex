@@ -1,0 +1,130 @@
+<button onclick="navigateTo('main-page')" class="google-sans my-6 text-blue-600 font-semibold hover:underline">&larr; Back to Training Overview</button>
+
+<!-- Content from google_site_training_1_1 (updated to C.R.E.A.T.E.) -->
+<div class="content-section text-center">
+  <h2 class="google-sans text-4xl font-bold text-gray-800">Session 1.1: Prompt Engineering 101 for Recruiters</h2>
+  <p class="mt-4 text-lg text-gray-600">Your guide to moving from simple questions to expert commands.</p>
+</div>
+
+<div class="content-section grid md:grid-cols-3 gap-8 items-center">
+  <div class="md:col-span-2">
+    <h3 class="google-sans text-2xl font-bold text-blue-600 mb-4">The #1 Skill for Working with AI</h3>
+    <p class="mb-4">The goal today is to become an expert instructor for your AI assistant. In our survey, the #1 skill gap was knowing how to get the AI to do what you actually want.</p>
+    <p class="font-semibold">Think of AI as the world's most brilliant junior assistant: it's incredibly fast and knowledgeable, but it has zero context about your job. A vague instruction gets a vague result. An expert instruction gets an expert result.</p>
+  </div>
+  <div class="flex justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>
+  </div>
+</div>
+
+<div class="content-section">
+  <h3 class="google-sans text-2xl font-bold text-center text-blue-600 mb-6">A Tale of Two Prompts</h3>
+
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h4 class="google-sans text-xl font-medium mb-2">The "Before" Prompt</h4>
+      <p class="mb-3">This is how most people start. The result is generic, boring, and won't attract top talent because the AI has to guess everything.</p>
+      <div class="prompt-box text-sm">write a job description for a software engineer</div>
+    </div>
+
+    <div>
+      <h4 class="google-sans text-xl font-medium mb-2">The "After" Prompt (C.R.E.A.T.E.)</h4>
+      <p class="mb-3">This is an expert command. It gives the AI a professional brief, not a vague question, leading to a high-quality result.</p>
+      <div class="prompt-box text-sm">
+        <strong>[CHARACTER]</strong> You are an expert RPO recruiter and recruitment marketer...<br>
+        <strong>[REQUEST]</strong> Write a compelling job description for a "Senior Full-Stack Engineer" tailored to mid-market tech companies...<br>
+        <strong>[EXAMPLES]</strong> Provide 3 short example bullets showing desired tone (concise, action-oriented, benefits-focused).<br>
+        <strong>[ADDITIONS]</strong> Include location, required experience (5+ years), and must-have stacks (React, Node.js).<br>
+        <strong>[TYPE]</strong> Output: Sections — Summary, Responsibilities, Required Skills, Nice-to-Have, Compensation Range, How to Apply.<br>
+        <strong>[EXTRAS]</strong> Tone: professional & persuasive; length: ~300 words; avoid buzzwords.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <h3 class="google-sans text-2xl font-bold text-center text-blue-600 mb-6">The C.R.E.A.T.E. Framework</h3>
+  <p class="text-center max-w-2xl mx-auto mb-8">An expert prompt contains six key ingredients. Mastering this structure is the key to getting high-quality results every time.</p>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 text-center">
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Character</h4>
+      <p>Who should the AI be?</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Request</h4>
+      <p>What action should it perform?</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Examples</h4>
+      <p>What does a good output look like?</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Additions</h4>
+      <p>Extra context, constraints, or details</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Type</h4>
+      <p>Format / structure of the response</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg border">
+      <h4 class="google-sans font-bold text-lg">Extras</h4>
+      <p>Tone, length, and items to avoid</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <h3 class="google-sans text-2xl font-bold text-center text-blue-600 mb-6">Lab Activities</h3>
+
+  <div class="space-y-8">
+    <div>
+      <h4 class="google-sans text-xl font-medium mb-2">Lab 1: Creating a Candidate Persona (15 Mins)</h4>
+      <p class="mb-4">Your goal is to create a detailed candidate persona for a hard-to-fill "Senior Clinical Research Associate" role. If you don't know who you're looking for, you can't write content that resonates. Use the C.R.E.A.T.E. structure to build your prompt.</p>
+
+      <details class="bg-white border rounded-lg cursor-pointer">
+        <summary class="google-sans p-4 font-medium">View Example Persona Prompt</summary>
+        <div class="p-4 border-t prompt-box text-sm">
+          <strong>[CHARACTER]</strong> You are a senior life sciences recruiter and candidate profiling expert...<br>
+          <strong>[REQUEST]</strong> Create a detailed candidate persona for a "Senior Clinical Research Associate" based in Budapest...<br>
+          <strong>[EXAMPLES]</strong> Provide sections and sample bullets (Summary, Demographics &amp; Experience, Key Skills, Motivations, Where to Find Them).<br>
+          <strong>[ADDITIONS]</strong> Include typical certifications, seniority level, and travel expectations.<br>
+          <strong>[TYPE]</strong> Output: Headed sections with 3–5 bullets each.<br>
+          <strong>[EXTRAS]</strong> Tone: factual and recruiter-facing; keep concise.
+        </div>
+      </details>
+    </div>
+
+    <div>
+      <h4 class="google-sans text-xl font-medium mb-2">Lab 2: Drafting a Compelling Job Description (20 Mins)</h4>
+      <p class="mb-4">Now, use the persona you just created to draft a job description that speaks directly to them. This time, include Examples showing tone & structure in the prompt so the AI replicates it.</p>
+
+      <details class="bg-white border rounded-lg cursor-pointer">
+        <summary class="google-sans p-4 font-medium">View Example Job Description Prompt</summary>
+        <div class="p-4 border-t prompt-box text-sm">
+          <strong>[CHARACTER]</strong> You are an expert recruitment marketing copywriter...<br>
+          <strong>[REQUEST]</strong> Write a full job description for a Senior CRA role targeting the persona we created...<br>
+          <strong>[EXAMPLES]</strong> Include a short sample opening paragraph that demonstrates the desired tone: "Join us in a role that advances clinical innovation..."<br>
+          <strong>[ADDITIONS]</strong> Include location, salary band (EUR mid-market), and required qualifications.<br>
+          <strong>[TYPE]</strong> Structure the output with headings: "Your Mission", "A Day in the Life", "Required Skills", "Benefits".<br>
+          <strong>[EXTRAS]</strong> Tone: confident & inclusive; length: ~350 words; avoid buzzwords like "rockstar".
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<div class="content-section text-center">
+  <h3 class="google-sans text-2xl font-bold text-blue-600 mb-4">Wrap-Up & Next Steps</h3>
+  <p class="max-w-2xl mx-auto mb-4">Your new superpower is the C.R.E.A.T.E. Framework. Remember the golden rule: Vague Instructions = Vague Results. Expert Instructions = Expert Results.</p>
+
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 text-left inline-block">
+    <p><strong class="font-bold">Optional Homework:</strong> Take a real role you're working on now. Use the C.R.E.A.T.E. framework to create a persona and a draft outreach email.</p>
+    <p><strong class="font-bold">Next Session:</strong> Session 1.2 - AI-Powered Email &amp; Content Lab.</p>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="../../shared/scripts/footer.js" defer></script>

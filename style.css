@@ -1,0 +1,9 @@
+.back-to-hub-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: #4A90E2; /* Randstad Blue */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* rounded-full */
+        }

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Horizon - GBS AI Enablement Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../shared/ai-sme-colors.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': 'var(--ai-accent)',
+                        'brand-primary-hover': 'var(--ai-accent-hover)',
+                        'brand-dark': 'var(--ai-heading)',
+                        'brand-body': 'var(--ai-text)',
+                        'brand-muted': 'var(--ai-text)', // Using main text color for muted as well for simplicity
+                        'brand-bg': 'var(--ai-bg)',
+                        'brand-card-bg': 'var(--ai-card)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: var(--ai-bg);
+            color: var(--ai-text);
+        }
+        .nav-link.active {
+            color: var(--ai-accent);
+            font-weight: 600;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--ai-heading);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--ai-text);
+            text-align: center;
+            max-width: 42rem; /* 3xl */
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
+        }
+        .card {
+            background-color: var(--ai-card);
+            border-radius: 0.75rem; /* larger radius */
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--ai-border);
+            box-shadow: var(--ai-shadow-sm);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--ai-shadow-md);
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--ai-accent);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--ai-accent-hover);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--ai-accent);
+            border: 1px solid var(--ai-accent);
+        }
+        .btn-secondary:hover {
+            background-color: var(--ai-accent);
+            color: white;
+        }
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-body font-sans leading-relaxed">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-brand-dark flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-brand-primary"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                AI Horizon
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-brand-body hover:text-brand-primary transition-colors duration-300">Home</a>
+                <a href="#get-started" class="nav-link text-brand-body hover:text-brand-primary transition-colors duration-300">Get Started</a>
+                <a href="#learning-hub" class="nav-link text-brand-body hover:text-brand-primary transition-colors duration-300">Learning Hub</a>
+                <a href="#ai-tools" class="nav-link text-brand-body hover:text-brand-primary transition-colors duration-300">AI Tools</a>
+                <a href="#community" class="nav-link text-brand-body hover:text-brand-primary transition-colors duration-300">Community</a>
+            </nav>
+             <a href="#community" class="hidden md:inline-block btn btn-primary">Get Help</a>
+            <button id="mobile-menu-button" class="md:hidden text-brand-dark">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="#home" class="block py-2 text-brand-body hover:text-brand-primary">Home</a>
+            <a href="#get-started" class="block py-2 text-brand-body hover:text-brand-primary">Get Started</a>
+            <a href="#learning-hub" class="block py-2 text-brand-body hover:text-brand-primary">Learning Hub</a>
+            <a href="#ai-tools" class="block py-2 text-brand-body hover:text-brand-primary">AI Tools</a>
+            <a href="#community" class="block py-2 text-brand-body hover:text-brand-primary">Community</a>
+            <a href="#community" class="block mt-2 btn btn-primary w-full">Get Help</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <!-- Home Section -->
+        <section id="home" class="min-h-[80vh] flex items-center">
+            <div class="max-w-3xl">
+                <h1 class="text-brand-primary text-lg font-medium mb-4">Welcome to AI Horizon</h1>
+                <h2 class="text-4xl md:text-6xl font-extrabold text-brand-dark mb-6">Unlock Your Potential with Artificial Intelligence.</h2>
+                <p class="text-lg md:text-xl text-brand-muted mb-8">
+                    Your central guide to understanding, using, and innovating with AI in GBS. Let's build the future of work, together.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#get-started" class="btn btn-primary">Start Your Learning Journey</a>
+                    <a href="#ai-tools" class="btn btn-secondary">Explore Gemini</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Started Section -->
+        <section id="get-started" class="py-20">
+            <h2 class="section-title">First Steps into AI</h2>
+            <div class="max-w-4xl mx-auto">
+                <div id="accordion-container" class="space-y-4">
+                    <!-- Accordion Item 1 -->
+                    <div class="card">
+                        <button class="accordion-toggle flex justify-between items-center w-full text-left">
+                            <h3 class="text-xl font-semibold text-brand-dark">What is AI & Why It Matters to GBS?</h3>
+                            <svg class="w-6 h-6 text-brand-primary transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="accordion-content hidden mt-4 text-brand-body">
+                            <p>Artificial Intelligence (AI) is technology that enables computers to perform tasks that typically require human intelligence. For GBS, this means automating repetitive tasks, analyzing data to find insights, enhancing communication, and freeing up your time to focus on strategic, high-value work. It's our key to becoming more efficient, innovative, and impactful.</p>
+                        </div>
+                    </div>
+                    <!-- Accordion Item 2 -->
+                    <div class="card">
+                        <button class="accordion-toggle flex justify-between items-center w-full text-left">
+                            <h3 class="text-xl font-semibold text-brand-dark">Our GBS AI Strategy</h3>
+                            <svg class="w-6 h-6 text-brand-primary transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="accordion-content hidden mt-4 text-brand-body">
+                            <p>Our strategy is simple: Empower every employee. We will focus on providing practical training, approving safe and effective tools, and fostering a community where we can all learn from each other. Our goal is to integrate AI seamlessly into our daily workflows to enhance productivity and drive business value.</p>
+                        </div>
+                    </div>
+                    <!-- Accordion Item 3 -->
+                    <div class="card">
+                        <button class="accordion-toggle flex justify-between items-center w-full text-left">
+                            <h3 class="text-xl font-semibold text-brand-dark">Acceptable Use Policy</h3>
+                            <svg class="w-6 h-6 text-brand-primary transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                        <div class="accordion-content hidden mt-4 text-brand-body">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Do:</strong> Use AI to enhance your work, brainstorm ideas, and automate tasks.</li>
+                                <li><strong>Do:</strong> Use only company-approved AI tools for work-related activities.</li>
+                                <li><strong>Do not:</strong> Input any confidential, client, or personal data into public AI tools.</li>
+                                <li><strong>Do not:</strong> Present AI-generated content as your own without review and editing.</li>
+                                <li><strong>Always:</strong> Verify facts and figures generated by AI. You are responsible for the final output.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Hub Section -->
+        <section id="learning-hub" class="py-20">
+            <h2 class="section-title">Your Learning Hub</h2>
+            <div class="max-w-6xl mx-auto">
+                <!-- Tabs -->
+                <div class="mb-8 flex justify-center border-b border-gray-200">
+                    <button class="tab-btn active px-6 py-3 text-lg font-medium text-brand-primary border-b-2 border-brand-primary" data-tab="workshops">Upcoming Workshops</button>
+                    <button class="tab-btn px-6 py-3 text-lg font-medium text-brand-muted hover:text-brand-dark" data-tab="library">On-Demand Library</button>
+                    <button class="tab-btn px-6 py-3 text-lg font-medium text-brand-muted hover:text-brand-dark" data-tab="prompt-library">Prompt Library</button>
+                </div>
+
+                <!-- Tab Content -->
+                <div id="workshops" class="tab-content">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card">
+                            <span class="text-sm text-brand-primary font-medium">Aug 15, 2025</span>
+                            <h3 class="text-xl font-bold text-brand-dark mt-2 mb-3">Prompt Engineering 101</h3>
+                            <p class="text-brand-body mb-4">Learn how to write effective prompts to get the best results from Gemini.</p>
+                            <a href="#" class="btn btn-primary w-full">Register Now</a>
+                        </div>
+                        <div class="card">
+                            <span class="text-sm text-brand-primary font-medium">Sep 5, 2025</span>
+                            <h3 class="text-xl font-bold text-brand-dark mt-2 mb-3">AI for Data Analysis</h3>
+                            <p class="text-brand-body mb-4">Discover how to use Gemini to analyze data, create formulas, and build insightful reports in Excel and Google Sheets.</p>
+                            <a href="#" class="btn btn-primary w-full">Register Now</a>
+                        </div>
+                        <div class="card">
+                            <span class="text-sm text-brand-primary font-medium">Sep 20, 2025</span>
+                            <h3 class="text-xl font-bold text-brand-dark mt-2 mb-3">Responsible AI in Practice</h3>
+                            <p class="text-brand-body mb-4">An essential session on the ethical considerations and data privacy rules when using Gemini at work.</p>
+                            <a href="#" class="btn btn-primary w-full">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="library" class="tab-content hidden">
+                     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="card text-center">
+                            <img src="https://placehold.co/400x225/E5E7EB/374151?text=Video" alt="Video thumbnail" class="rounded-md mb-4 w-full">
+                            <h3 class="text-lg font-semibold text-brand-dark">Intro to Gemini</h3>
+                            <a href="https://drive.google.com/file/d/10H_fL0bKVsB-cObFUD5ObETnWJdEMMNY/preview" class="btn btn-secondary w-full mt-4">Watch Now</a>
+                        </div>
+                         <div class="card text-center">
+                            <img src="https://placehold.co/400x225/E5E7EB/374151?text=Video" alt="Video thumbnail" class="rounded-md mb-4 w-full">
+                            <h3 class="text-lg font-semibold text-brand-dark">Gemini Masterclass</h3>
+                            <a href="https://drive.google.com/file/d/1iUCn1lbI4-evB_GvkVWK9QU2Wz_A16IM/preview" class="btn btn-secondary w-full mt-4">Watch Now</a>
+                        </div>
+                         <div class="card text-center">
+                            <img src="https://placehold.co/400x225/E5E7EB/374151?text=Video" alt="Video thumbnail" class="rounded-md mb-4 w-full">
+                            <h3 class="text-lg font-semibold text-brand-dark">Advanced Prompting</h3>
+                            <a href="https://drive.google.com/file/d/1mfJbDJcXYyEQuZHm4CYMVuZrhKbGsbEo/preview" class="btn btn-secondary w-full mt-4">Watch Now</a>
+                        </div>
+                         <div class="card text-center">
+                            <img src="https://placehold.co/400x225/E5E7EB/374151?text=Video" alt="Video thumbnail" class="rounded-md mb-4 w-full">
+                            <h3 class="text-lg font-semibold text-brand-dark">AI for Recruiters</h3>
+                            <a href="https://drive.google.com/file/d/10H_fL0bKVsB-cObFUD5ObETnWJdEMMNY/preview" class="btn btn-secondary w-full mt-4">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="prompt-library" class="tab-content hidden">
+                    <div class="text-center bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                        <h3 class="text-2xl font-bold text-brand-dark">Explore the Gemini Prompt Library</h3>
+                        <p class="max-w-2xl mx-auto text-brand-muted mt-2 mb-6">
+                            Discover, share, and vote on the best prompts submitted by your GBS colleagues. This is a living library of practical examples to help you master Gemini.
+                        </p>
+                        <!-- NOTE: In a real application, this link would navigate to the separate Prompt Library page. -->
+                        <a href="/gbs-prompts/index.html" class="btn btn-primary">Go to Prompt Library</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Tools Section -->
+        <section id="ai-tools" class="py-20">
+            <h2 class="section-title">Your Approved GBS AI Tool: Gemini for Randstad</h2>
+            <p class="section-subtitle">
+                Gemini for Randstad is our official, enterprise-grade AI partner. It's a secure environment designed to help you work smarter, not harder. Explore what you can do with our most powerful tool.
+            </p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Card 1: Communication -->
+                <div class="card text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Accelerate Communication</h3>
+                    <p class="text-brand-body">Draft professional emails, summarize long documents, create engaging job descriptions, and translate languages instantly. Overcome writer's block and communicate more effectively.</p>
+                </div>
+                <!-- Card 2: Analysis -->
+                <div class="card text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20V16"></path></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Unlock Data Insights</h3>
+                    <p class="text-brand-body">Analyze data, explain complex spreadsheets, and generate formulas for Google Sheets or Excel. Turn raw data into clear, actionable insights without being a data scientist.</p>
+                </div>
+                <!-- Card 3: Creativity -->
+                <div class="card text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M18 10a6 6 0 0 0-12 0"></path><path d="M12 16v5"></path><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Boost Creativity & Strategy</h3>
+                    <p class="text-brand-body">Brainstorm innovative ideas for projects, create presentation outlines, develop strategic plans, and explore new approaches to challenges. Use Gemini as your creative partner.</p>
+                </div>
+            </div>
+             <div class="text-center mt-12">
+                <a href="https://gemini.google.com/app" class="btn btn-primary btn-lg">Access Gemini for Randstad</a>
+            </div>
+        </section>
+
+        <!-- Community & Support Section -->
+        <section id="community" class="py-20 text-center">
+            <h2 class="section-title">Join the Community & Get Support</h2>
+            <p class="max-w-2xl mx-auto text-brand-muted mb-12">Don't go it alone. Whether you have a question, a new idea, or want to see what others are doing, we're here to help.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M18 10a6 6 0 0 0-12 0"></path><path d="M12 16v5"></path><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Ask the AI SME</h3>
+                    <p class="text-brand-body mb-4">Stuck on a problem or have a question? Book a 1-on-1 session during our office hours.</p>
+                    <a href="#" class="btn btn-primary w-full">Book Office Hours</a>
+                </div>
+                <div class="card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Join the Community</h3>
+                    <p class="text-brand-body mb-4">Connect with fellow AI enthusiasts on our dedicated Teams channel. Share tips and see what others are building.</p>
+                    <a href="#" class="btn btn-secondary w-full">Open Google Chat Channel</a>
+                </div>
+                <div class="card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 text-brand-primary"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <h3 class="text-xl font-bold text-brand-dark mb-2">Submit Your Idea</h3>
+                    <p class="text-brand-body mb-4">Have an idea for how AI could improve a process? We want to hear it! Submit your concept for review.</p>
+                    <a href="#" class="btn btn-secondary w-full">Share Your Idea</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../shared/scripts/footer.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Accordion functionality
+            const accordionToggles = document.querySelectorAll('.accordion-toggle');
+            accordionToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('svg');
+
+                    // Close other accordions
+                    document.querySelectorAll('.accordion-content').forEach(item => {
+                        if (item !== content) {
+                            item.classList.add('hidden');
+                            item.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                        }
+                    });
+
+                    // Toggle current accordion
+                    content.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // Tabs functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => {
+                        b.classList.remove('active', 'text-brand-primary', 'border-brand-primary');
+                        b.classList.add('text-brand-muted', 'hover:text-brand-dark');
+                    });
+                    btn.classList.add('active', 'text-brand-primary', 'border-brand-primary');
+                    btn.classList.remove('text-brand-muted', 'hover:text-brand-dark');
+
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    document.getElementById(btn.dataset.tab).classList.remove('hidden');
+                });
+            });
+
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

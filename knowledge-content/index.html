@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Training & Knowledge Content</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../shared/hub-button.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for the details/summary accordion */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        .chevron {
+            transition: transform 0.2s ease-in-out;
+        }
+        details[open] .chevron {
+            transform: rotate(90deg);
+        }
+        /* Responsive iframe container */
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+       .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Back to Top Button Styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            background-color: #3730a3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+        }
+
+        #back-to-top:active {
+            transform: translateY(0);
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Gemini Training & Knowledge Content</h1>
+            <p class="text-base sm:text-lg text-gray-600">This page contains links to knowledge articles, role-specific use cases, and online courses.</p>
+        </header>
+
+        <main class="space-y-8">
+
+            <!-- Section: Training Videos -->
+            <section id="videos" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-800">Gemini Training Videos: Introduction</h2>
+                </div>
+                <div class="space-y-2">
+                    <!-- Video accordions -->
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Schedule Action With Gemini <span class="text-sm font-medium text-gray-500">(1:10)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /> </svg></summary> <div class="p-4 mt-2"> <div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1Kc2V6UCrV9K5w9ziziRsAwP6xJTKyfB4/preview" width="640" height="480"allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Start With Google Flows Using Gemini <span class="text-sm font-medium text-gray-500">(3:08)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1gjiWFxBg08WymUPNH2sRq6S9gk5xloLE/preview" width="640" height="480" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Start using Gemini and general prompting <span class="text-sm font-medium text-gray-500">(7:20)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1mfJbDJcXYyEQuZHm4CYMVuZrhKbGsbEo/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Using Gemini App <span class="text-sm font-medium text-gray-500">(9:40)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1TKwELbbQBWF8Famt6fbAUQma6POdw2Yz/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Gemini in Gmail and Google Chat <span class="text-sm font-medium text-gray-500">(8:00)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/10H_fL0bKVsB-cObFUD5ObETnWJdEMMNY/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Gemini in Google Docs <span class="text-sm font-medium text-gray-500">(6:41)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1pz_vjiJtunaRGHt0BloQEZVkM_g6zFmk/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Gemini in Google Sheets <span class="text-sm font-medium text-gray-500">(5:30)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1CQglvTtEdKphRetUT2WHJ8p2K1XHY4DX/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Gemini in Google Drive <span class="text-sm font-medium text-gray-500">(7:07)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1FDDA532EYydnecDmxbM7w49_w5vmSkOJ/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>NotebookLM Plus <span class="text-sm font-medium text-gray-500">(6:43)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1_7rdXgRGveGDPImEZfAbZh3DL-pTUl1Y/preview" allow="autoplay"></iframe></div></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"><span>Convert RandstadGPT Genies to Gemini Gems <span class="text-sm font-medium text-gray-500">(0:51)</span></span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 mt-2"><div class="iframe-container rounded-lg"><iframe src="https://drive.google.com/file/d/1iUCn1lbI4-evB_GvkVWK9QU2Wz_A16IM/preview" allow="autoplay"></iframe></div></div></details>
+                </div>
+            </section>
+
+            <!-- Section: Knowledge Articles -->
+            <section id="articles" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-800">Knowledge & Help Articles</h2>
+                </div>
+                <div class="space-y-2">
+                    <!-- Accordion items -->
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Side Panel<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/a/users/answer/15146419?hl=en&ref_topic=14438752&sjid=2189940629692612600-EU" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Side Panel to collaborate with Gemini</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Gmail<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/mail/answer/13955415?hl=en&ref_topic=13955315&sjid=4621261918311636455-EU" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Draft emails with Gemini in Gmail</a><a href="https://support.google.com/mail/answer/14355636?hl=en&co=GENIE.Platform%3DDesktop&sjid=4621261918311636455-EU&oco=0" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Collaborate with Gemini in Gmail</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Docs<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/docs/answer/14355406" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Collaborate with Gemini in Google Docs</a><a href="https://support.google.com/docs/answer/13951448" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to write with Gemini in Google Docs</a><a href="https://support.google.com/docs/answer/15559738" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to create an image with Gemini in Google Docs</a><a href="https://support.google.com/docs/answer/15628121" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to summarize documents with Gemini in Google Docs</a><a href="https://support.google.com/docs/answer/15541387" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to create documents with Gemini in Google Docs</a><a href="https://support.google.com/docs/answer/57859#proofread" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to use Proofread</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Drive<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/drive/answer/14356148" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Collaborate with Gemini in Google Drive</a><a href="https://support.google.com/drive/answer/15141241?sjid=2189940629692612600-EU&hl=en" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Use Gemini in Drive to work with PDFs</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Sheets<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/docs/answer/14356410" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Collaborate with Gemini in Google Sheets</a><a href="https://support.google.com/docs/answer/13951830" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to organize data with Gemini</a><a href="https://support.google.com/docs/answer/14226603" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to use enhanced Smart Fill</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Slides<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/docs/answer/14355071" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Collaborate with Gemini in Google Slides</a><a href="https://support.google.com/docs/answer/13951829" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to create images with Gemini in Google Slides</a><a href="https://support.google.com/docs/answer/14665097" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to remove image backgrounds</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Meet<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/meet/answer/14754931" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to take meeting notes with Gemini</a><a href="https://support.google.com/meet/answer/10964115" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn about translated captions</a><a href="https://support.google.com/meet/answer/14263133" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn about adaptive audio</a><a href="https://support.google.com/meet/answer/13954947" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to create background images</a><a href="https://support.google.com/meet/answer/14441737" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to enhance video and audio with Gemini</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Chat<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/chat/answer/12918975?hl=en&sjid=3098545648108776334-NA#use-Gemini-summaries" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn about Gemini summaries in Google Chat</a><a href="https://support.google.com/chat/answer/15711193" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn more about Automatic Translation</a><a href="https://support.google.com/chat/answer/15345722" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Learn how to collaborate with Gemini in Google Chat</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Google Vids<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/a/users/answer/14731773?visit_id=638748229361458114-2817982720&hl=en&rd=1#" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Google Vids training & help</a><a href="https://support.google.com/a/users/topic/14817753?hl=en&ref_topic=14731934" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Get started with Vids in Google Workspace</a><a href="https://support.google.com/a/users/answer/14819784?hl=en&ref_topic=14731934" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Google Vids cheat sheet</a><a href="https://support.google.com/a/users/answer/15599399?hl=en&ref_topic=14731934" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Best practices for Google Vids</a></div></details>
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">NotebookLM<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/notebooklm/answer/14276468?hl=en&ref_topic=14272601&sjid=1735808168312240329-EU" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">NotebookLM - Sources</a><a href="https://support.google.com/notebooklm/answer/14276471?hl=en&ref_topic=14272601" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">NotebookLM - Notebooks</a><a href="https://support.google.com/notebooklm/answer/14276569?hl=en&ref_topic=14272601" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">NotebookLM - Asking Questions</a><a href="https://support.google.com/notebooklm/answer/14276069?hl=en&ref_topic=14272601" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">NotebookLM - Notes</a><a href="https://support.google.com/notebooklm/answer/15731776?hl=en&ref_topic=14272601" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">NotebookLM - Audio Overviews</a></div></details>
+                </div>
+            </section>
+
+            <!-- Section: Role-Specific Prompts -->
+            <section id="roles" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-800">Role-Specific Prompts & Use Cases</h2>
+                </div>
+                <div class="space-y-2">
+                    <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Prompts & Use Cases<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://support.google.com/a/users/answer/14190391" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Use Google Gemini for sales</a><a href="https://support.google.com/a/users/answer/14196644" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Use Google Gemini for marketing</a><a href="https://support.google.com/a/users/answer/14171678" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Use Google Gemini for human resources</a><a href="https://support.google.com/a/users/answer/14571258" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Use Google Gemini for nonprofits</a></div></details>
+                </div>
+            </section>
+
+            <!-- Section: Online Courses -->
+            <section id="courses" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-gray-800">Online Courses</h2>
+                </div>
+                <div class="space-y-2">
+                     <details class="group"><summary class="flex items-center justify-between p-3 font-semibold text-gray-700 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">Available Courses<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg></summary><div class="p-4 space-y-2 border-l-2 border-indigo-200 ml-3"><a href="https://www.cloudskillsboost.google/paths/249/course_templates/896" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Gmail</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/914" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Docs</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/931" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Slides</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/905" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Sheets</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/943" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Meet</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/1135" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Drive</a><a href="https://www.cloudskillsboost.google/paths/249/course_templates/1179" class="block text-indigo-700 hover:underline" target="_blank" rel="noopener noreferrer">Gemini in Google Vids</a></div></details>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <a href="../index.html" class="hub-button">Back To Hub</a>
+<button id="back-to-top" title="Back to top" aria-label="Scroll to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6" />
+    </svg>
+</button>
+
+    
+</body>
+</html>
+
+
+
+

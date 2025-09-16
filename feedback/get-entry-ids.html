@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Form Entry ID Extractor</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        input[type="url"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #4285f4; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #3367d6; }
+        .results { background: white; padding: 15px; border-radius: 4px; margin: 10px 0; }
+        .code { background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Google Form Entry ID Extractor</h1>
+
+    <div class="container">
+        <h3>Step 1: Enter your Google Form URL</h3>
+        <p>Paste the URL of your Google Form (the one that ends with /viewform)</p>
+        <input type="url" id="formUrl" placeholder="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform">
+        <button onclick="extractEntryIds()">Extract Entry IDs</button>
+    </div>
+
+    <div id="results" class="container" style="display: none;">
+        <h3>Step 2: Copy these values to your feedback form</h3>
+        <div id="entryIds"></div>
+
+        <h3>Step 3: Update your form action URL</h3>
+        <p>Replace <code>YOUR_GOOGLE_FORM_ACTION_URL</code> in your feedback/index.html with:</p>
+        <div id="actionUrl" class="code"></div>
+    </div>
+
+    <script>
+        function extractEntryIds() {
+            const formUrl = document.getElementById('formUrl').value;
+
+            if (!formUrl || !formUrl.includes('docs.google.com/forms')) {
+                alert('Please enter a valid Google Forms URL');
+                return;
+            }
+
+            // Create action URL
+            const actionUrl = formUrl.replace('/viewform', '/formResponse');
+            document.getElementById('actionUrl').textContent = actionUrl;
+
+            // Show instructions for manual extraction
+            const entryIdsDiv = document.getElementById('entryIds');
+            entryIdsDiv.innerHTML = `
+                <p><strong>To get the entry IDs:</strong></p>
+                <ol>
+                    <li>Open your form in a new tab: <a href="${formUrl}" target="_blank">Click here</a></li>
+                    <li>Right-click on the page and select "View Page Source"</li>
+                    <li>Press Ctrl+F (or Cmd+F) and search for "entry."</li>
+                    <li>Look for patterns like <code>entry.123456789</code></li>
+                    <li>Copy the entry IDs and replace the placeholders below:</li>
+                </ol>
+
+                <div class="code">
+                    <strong>Replace these in your feedback/index.html:</strong><br>
+                    FEEDBACK_TYPE_ENTRY_ID → entry.XXXXXXXXX (first entry ID you find)<br>
+                    RELATED_SECTION_ENTRY_ID → entry.XXXXXXXXX (second entry ID)<br>
+                    NAME_ENTRY_ID → entry.XXXXXXXXX (third entry ID)<br>
+                    EMAIL_ENTRY_ID → entry.XXXXXXXXX (fourth entry ID)<br>
+                    DEPARTMENT_ENTRY_ID → entry.XXXXXXXXX (fifth entry ID)<br>
+                    RATING_ENTRY_ID → entry.XXXXXXXXX (sixth entry ID)<br>
+                    MESSAGE_ENTRY_ID → entry.XXXXXXXXX (seventh entry ID)<br>
+                    SUGGESTIONS_ENTRY_ID → entry.XXXXXXXXX (eighth entry ID)
+                </div>
+
+                <p><strong>Example:</strong> If you find <code>entry.1234567890</code>, replace <code>FEEDBACK_TYPE_ENTRY_ID</code> with <code>1234567890</code></p>
+            `;
+
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+
+    <div id="footer-placeholder"></div>
+    <script src="../shared/scripts/footer.js" defer></script>
+</body>
+</html>

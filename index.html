@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randstad GBS - AI Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="shared/hub-button.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .google-sans {
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .hub-card {
+            border: 1px solid #dadce0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        .hub-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07), 0 3px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .hub-card h3 {
+            color: #1967d2;
+            /* Google Blue */
+        }
+
+        /* Search functionality styles */
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            font-size: 16px;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .clear-search.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .clear-search:hover {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Search results styles */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 50;
+            margin-top: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-results.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .search-result-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .search-result-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .search-result-category {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-top: 4px;
+        }
+
+        /* Card filtering styles */
+        .hub-card.filtered-out {
+            opacity: 0.3;
+            filter: grayscale(50%);
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        .hub-card.highlighted {
+            border-color: #4A90E2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2), 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Search highlight */
+        .search-highlight {
+            background-color: #fef08a;
+            padding: 1px 2px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .no-results.hidden {
+            display: none;
+        }
+
+        /* Search suggestions */
+        .search-suggestions {
+            padding: 12px 16px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-suggestions-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .search-suggestion-tag {
+            display: inline-block;
+            background-color: #e5e7eb;
+            color: #374151;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin-right: 6px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-suggestion-tag:hover {
+            background-color: #4A90E2;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto px-4 py-12 md:py-20">
+
+        <header class="text-center mb-12">
+            <h1 class="google-sans text-4xl md:text-5xl font-bold text-gray-900">Randstad GBS Learning Hub</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">A central portal for our AI training programs,
+                sourcing tools, and interactive workshops.</p>
+        </header>
+
+        <!-- Global Search Bar -->
+        <div class="search-container mb-12">
+            <div class="relative">
+                <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" id="global-search" class="search-input"
+                    placeholder="Search across all modules, content, and resources..." autocomplete="off">
+                <button class="clear-search" id="clear-search" title="Clear search">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Search Results Dropdown -->
+                <div class="search-results" id="search-results">
+                    <div class="search-suggestions">
+                        <div class="search-suggestions-title">Popular Searches</div>
+                        <span class="search-suggestion-tag" data-search="AI training">AI Training</span>
+                        <span class="search-suggestion-tag" data-search="prompts">Prompts</span>
+                        <span class="search-suggestion-tag" data-search="resume">Resume</span>
+                        <span class="search-suggestion-tag" data-search="sourcing">Sourcing</span>
+                        <span class="search-suggestion-tag" data-search="boolean">Boolean</span>
+                        <span class="search-suggestion-tag" data-search="leadership">Leadership</span>
+                        <span class="search-suggestion-tag" data-search="create framework">CREATE Framework</span>
+                        <span class="search-suggestion-tag" data-search="automation">Automation</span>
+                        <span class="search-suggestion-tag" data-search="success stories">Success Stories</span>
+                    </div>
+                    <div id="search-results-content">
+                        <!-- Dynamic search results will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto" id="modules-grid">
+
+                <a href="/rpo-training/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="rpo ai acceleration program training curriculum foundations leadership strategy modules phases">
+                    <h3 class="google-sans text-2xl font-bold mb-2">RPO AI Acceleration Program</h3>
+                    <p class="text-gray-600">The complete, multi-phase training curriculum for all RPO team members,
+                        from AI foundations to leadership strategy.</p>
+                </a>
+
+                <a href="/gbs-ai-workshop/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="gbs leaders guide interactive training prompt libraries simulators case studies workshop">
+                    <h3 class="google-sans text-2xl font-bold mb-2">Guide for GBS Leaders</h3>
+                    <p class="text-gray-600">An interactive training for GBS leaders, complete with prompt libraries,
+                        simulators, and case studies.</p>
+                </a>
+
+                <a href="/daily-focus/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="daily sourcing focus micro-coaching tool actionable cards talent sourcers skills">
+                    <h3 class="google-sans text-2xl font-bold mb-2">Daily Sourcing Focus</h3>
+                    <p class="text-gray-600">A daily micro-coaching tool with actionable focus cards designed to sharpen
+                        the skills of our talent sourcers.</p>
+                </a>
+
+                <a href="/gbs-prompts/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="gbs ai prompts library comprehensive searchable expert prompts daily tasks professionals">
+                    <h3 class="google-sans text-2xl font-bold mb-2">GBS AI Prompts Library</h3>
+                    <p class="text-gray-600">A comprehensive and searchable library of expert prompts designed to
+                        accelerate daily tasks for GBS professionals.</p>
+                </a>
+
+                <a href="/knowledge-content/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="knowledge content wealth resources information learning materials documentation">
+                    <h3 class="google-sans text-2xl font-bold mb-2">Knowledge Content</h3>
+                    <p class="text-gray-600">Access a wealth of knowledge content here.</p>
+                </a>
+
+                <a href="/ai-sme/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="ai sme subject matter expert knowledge resources artificial intelligence expertise">
+                    <h3 class="google-sans text-2xl font-bold mb-2">AI SME</h3>
+                    <p class="text-gray-600">Explore expert AI knowledge and resources.</p>
+                </a>
+
+                <a href="/use-cases/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="ai success stories real-world examples case studies transforms daily work randstad gbs impact">
+                    <h3 class="google-sans text-2xl font-bold mb-2">AI Success Stories</h3>
+                    <p class="text-gray-600">Real-world examples and case studies showcasing how AI transforms daily
+                        work at Randstad GBS. See the impact firsthand.</p>
+                </a>
+
+                <a href="/sourcing-workshop/" class="hub-card bg-white p-8 rounded-xl block"
+                    data-keywords="sourcing workshop advanced techniques market intelligence candidate engagement coming soon">
+                    <h3 class="google-sans text-2xl font-bold mb-2">Sourcing Workshop</h3>
+                    <p class="text-gray-600">An in-depth workshop dedicated to advanced sourcing techniques, market
+                        intelligence, and candidate engagement. (Coming Soon)</p>
+                </a>
+
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results hidden" id="no-results">
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33">
+                        </path>
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">No results found</h3>
+                    <p class="text-gray-500 mb-4">Try adjusting your search terms or browse our available modules above.
+                    </p>
+                    <button class="text-blue-600 hover:text-blue-800 font-medium" onclick="clearSearch()">Clear
+                        search</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="shared/scripts/footer.js" defer></script>
+
+    <script>
+        // Global Search Functionality with Site-wide Content Search
+        class GlobalSearch {
+            constructor() {
+                this.searchInput = document.getElementById('global-search');
+                this.clearButton = document.getElementById('clear-search');
+                this.searchResults = document.getElementById('search-results');
+                this.searchResultsContent = document.getElementById('search-results-content');
+                this.modulesGrid = document.getElementById('modules-grid');
+                this.noResults = document.getElementById('no-results');
+                this.cards = document.querySelectorAll('.hub-card');
+
+                this.searchData = [];
+                this.cardData = [];
+                this.loadSearchIndex();
+                this.initializeEventListeners();
+                this.initializeSuggestions();
+            }
+
+            async loadSearchIndex() {
+                try {
+                    const response = await fetch('/shared/search-index.json');
+                    const data = await response.json();
+                    this.searchData = data.searchIndex.map(item => ({
+                        ...item,
+                        searchText: `${item.title} ${item.description} ${item.keywords} ${item.content}`.toLowerCase()
+                    }));
+
+                    // Also build card data for local filtering
+                    this.cardData = this.buildCardIndex();
+                } catch (error) {
+                    console.warn('Could not load search index, falling back to local search:', error);
+                    this.searchData = this.buildCardIndex();
+                    this.cardData = this.searchData;
+                }
+            }
+
+            buildCardIndex() {
+                const cardData = [];
+                this.cards.forEach(card => {
+                    const title = card.querySelector('h3').textContent;
+                    const description = card.querySelector('p').textContent;
+                    const keywords = card.getAttribute('data-keywords') || '';
+                    const url = card.getAttribute('href');
+
+                    cardData.push({
+                        title,
+                        description,
+                        keywords,
+                        url,
+                        element: card,
+                        category: this.getCategoryFromUrl(url),
+                        type: 'module',
+                        searchText: `${title} ${description} ${keywords}`.toLowerCase()
+                    });
+                });
+                return cardData;
+            }
+
+            initializeEventListeners() {
+                // Search input events
+                this.searchInput.addEventListener('input', (e) => this.handleSearch(e.target.value));
+                this.searchInput.addEventListener('focus', () => this.showSearchResults());
+                this.searchInput.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+                // Clear button
+                this.clearButton.addEventListener('click', () => this.clearSearch());
+
+                // Click outside to close
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.search-container')) {
+                        this.hideSearchResults();
+                    }
+                });
+
+                // Escape key to close
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.hideSearchResults();
+                        this.searchInput.blur();
+                    }
+                });
+            }
+
+            initializeSuggestions() {
+                const suggestionTags = document.querySelectorAll('.search-suggestion-tag');
+                suggestionTags.forEach(tag => {
+                    tag.addEventListener('click', () => {
+                        const searchTerm = tag.getAttribute('data-search');
+                        this.searchInput.value = searchTerm;
+                        this.handleSearch(searchTerm);
+                        this.searchInput.focus();
+                    });
+                });
+            }
+
+            handleSearch(query) {
+                const trimmedQuery = query.trim();
+
+                // Show/hide clear button
+                if (trimmedQuery) {
+                    this.clearButton.classList.add('visible');
+                } else {
+                    this.clearButton.classList.remove('visible');
+                }
+
+                if (trimmedQuery.length === 0) {
+                    this.resetView();
+                    this.showSearchResults();
+                    return;
+                }
+
+                if (trimmedQuery.length < 2) {
+                    this.hideSearchResults();
+                    return;
+                }
+
+                const results = this.performSearch(trimmedQuery);
+                this.displaySearchResults(results, trimmedQuery);
+                this.filterCards(results, trimmedQuery);
+            }
+
+            performSearch(query) {
+                const queryLower = query.toLowerCase();
+                const results = [];
+                const queryWords = queryLower.split(/\s+/).filter(word => word.length > 1);
+
+                this.searchData.forEach(item => {
+                    let score = 0;
+                    let matchedWords = 0;
+
+                    // Exact phrase match in title (highest priority)
+                    if (item.title.toLowerCase().includes(queryLower)) {
+                        score += 20;
+                    }
+
+                    // Individual word matches in title
+                    queryWords.forEach(word => {
+                        if (item.title.toLowerCase().includes(word)) {
+                            score += 10;
+                            matchedWords++;
+                        }
+                    });
+
+                    // Exact phrase match in description
+                    if (item.description.toLowerCase().includes(queryLower)) {
+                        score += 15;
+                    }
+
+                    // Individual word matches in description
+                    queryWords.forEach(word => {
+                        if (item.description.toLowerCase().includes(word)) {
+                            score += 5;
+                            matchedWords++;
+                        }
+                    });
+
+                    // Keywords match
+                    if (item.keywords && item.keywords.toLowerCase().includes(queryLower)) {
+                        score += 8;
+                    }
+
+                    queryWords.forEach(word => {
+                        if (item.keywords && item.keywords.toLowerCase().includes(word)) {
+                            score += 3;
+                            matchedWords++;
+                        }
+                    });
+
+                    // Content match (for detailed content)
+                    if (item.content && item.content.toLowerCase().includes(queryLower)) {
+                        score += 6;
+                    }
+
+                    queryWords.forEach(word => {
+                        if (item.content && item.content.toLowerCase().includes(word)) {
+                            score += 2;
+                            matchedWords++;
+                        }
+                    });
+
+                    // Fuzzy search in all text
+                    if (item.searchText.includes(queryLower)) {
+                        score += 1;
+                    }
+
+                    // Bonus for matching multiple words
+                    if (queryWords.length > 1 && matchedWords >= queryWords.length * 0.7) {
+                        score += 5;
+                    }
+
+                    // Type-based scoring adjustments
+                    if (item.type === 'module') score *= 1.2;
+                    if (item.type === 'lesson') score *= 1.1;
+                    if (item.type === 'prompt-category') score *= 1.15;
+
+                    if (score > 0) {
+                        results.push({ ...item, score, matchedWords });
+                    }
+                });
+
+                // Sort by relevance score, then by matched words
+                return results.sort((a, b) => {
+                    if (b.score !== a.score) return b.score - a.score;
+                    return b.matchedWords - a.matchedWords;
+                });
+            }
+
+            displaySearchResults(results, query) {
+                this.searchResultsContent.innerHTML = '';
+
+                if (results.length === 0) {
+                    this.searchResultsContent.innerHTML = `
+                        <div class="search-result-item">
+                            <div class="search-result-title">No results found for "${query}"</div>
+                            <div class="search-result-description">Try different keywords like "prompts", "resume", "sourcing", or "training"</div>
+                        </div>
+                    `;
+                } else {
+                    // Show top 8 results with better categorization
+                    const topResults = results.slice(0, 8);
+
+                    // Group results by type for better organization
+                    const groupedResults = this.groupResultsByType(topResults);
+
+                    Object.entries(groupedResults).forEach(([type, items]) => {
+                        if (items.length > 0) {
+                            // Add type header for multiple types
+                            if (Object.keys(groupedResults).length > 1 && items.length > 1) {
+                                const header = document.createElement('div');
+                                header.className = 'search-result-header';
+                                header.innerHTML = `<div style="padding: 8px 16px; background: #f8fafc; font-weight: 600; font-size: 12px; color: #6b7280; text-transform: uppercase;">${this.getTypeDisplayName(type)}</div>`;
+                                this.searchResultsContent.appendChild(header);
+                            }
+
+                            items.forEach(result => {
+                                const resultElement = this.createSearchResultElement(result, query);
+                                this.searchResultsContent.appendChild(resultElement);
+                            });
+                        }
+                    });
+                }
+
+                this.showSearchResults();
+            }
+
+            groupResultsByType(results) {
+                const groups = {
+                    'module': [],
+                    'lesson': [],
+                    'prompt-category': [],
+                    'use-case': [],
+                    'utility': []
+                };
+
+                results.forEach(result => {
+                    const type = result.type || 'module';
+                    if (groups[type]) {
+                        groups[type].push(result);
+                    } else {
+                        groups['module'].push(result);
+                    }
+                });
+
+                // Remove empty groups
+                Object.keys(groups).forEach(key => {
+                    if (groups[key].length === 0) {
+                        delete groups[key];
+                    }
+                });
+
+                return groups;
+            }
+
+            getTypeDisplayName(type) {
+                const typeNames = {
+                    'module': 'Main Modules',
+                    'lesson': 'Training Lessons',
+                    'prompt-category': 'Prompt Categories',
+                    'use-case': 'Success Stories',
+                    'utility': 'Tools & Support'
+                };
+                return typeNames[type] || 'Content';
+            }
+
+            createSearchResultElement(result, query) {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+
+                const highlightedTitle = this.highlightText(result.title, query);
+                const highlightedDescription = this.highlightText(result.description, query);
+
+                // Section title display
+                const sectionDisplay = result.sectionTitle
+                    ? `<div class="search-result-section" style="font-size: 12px; color: #1967d2; font-weight: 500; margin-top: 4px;">↳ In: ${this.highlightText(result.sectionTitle, query)}</div>`
+                    : '';
+
+                div.innerHTML = `
+                    <div class="search-result-title">${highlightedTitle}</div>
+                    <div class="search-result-description">${highlightedDescription}</div>
+                    ${sectionDisplay}
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                        <span class="search-result-category">${result.category || this.getCategoryFromUrl(result.url)}</span>
+                        ${result.type === 'lesson' ? '<span style="font-size: 11px; color: #9ca3af;">📚 Lesson</span>' : ''}
+                        ${result.type === 'prompt-category' ? '<span style="font-size: 11px; color: #9ca3af;">🎯 Prompts</span>' : ''}
+                        ${result.type === 'use-case' ? '<span style="font-size: 11px; color: #9ca3af;">📈 Case Study</span>' : ''}
+                    </div>
+                `;
+
+                div.addEventListener('click', () => {
+                    this.handleResultClick(result);
+                });
+
+                return div;
+            }
+
+            handleResultClick(result) {
+                // The full implementation with smooth scrolling will be in the next step.
+                // For now, this just navigates to the URL with anchor.
+                const targetUrl = result.anchor ? `${result.url}#${result.anchor}` : result.url;
+                window.location.href = targetUrl;
+            }
+
+            highlightText(text, query) {
+                if (!query) return text;
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                return text.replace(regex, '<span class="search-highlight">$1</span>');
+            }
+
+            getCategoryFromUrl(url) {
+                const categoryMap = {
+                    'rpo-training': 'Training Program',
+                    'gbs-ai-workshop': 'Leadership Workshop',
+                    'daily-focus': 'Daily Tools',
+                    'gbs-prompts': 'Prompt Library',
+                    'knowledge-content': 'Knowledge Base',
+                    'ai-sme': 'Expert Resources',
+                    'use-cases': 'Success Stories',
+                    'sourcing-workshop': 'Workshop'
+                };
+
+                for (const [key, value] of Object.entries(categoryMap)) {
+                    if (url.includes(key)) return value;
+                }
+                return 'Module';
+            }
+
+            filterCards(results, query) {
+                // Get matching URLs from both site-wide results and card data
+                const siteWideUrls = new Set(results.map(r => r.url));
+                const cardMatchingUrls = new Set();
+
+                // Also check card data for local matches
+                this.cardData.forEach(cardItem => {
+                    if (cardItem.searchText.includes(query.toLowerCase())) {
+                        cardMatchingUrls.add(cardItem.url);
+                    }
+                });
+
+                // Combine both sets
+                const allMatchingUrls = new Set([...siteWideUrls, ...cardMatchingUrls]);
+
+                this.cards.forEach(card => {
+                    const cardUrl = card.getAttribute('href');
+                    const isMainModuleMatch = allMatchingUrls.has(cardUrl);
+                    const hasRelatedContent = results.some(r => r.url.startsWith(cardUrl));
+
+                    if (query.length === 0 || isMainModuleMatch || hasRelatedContent) {
+                        // Show matching cards
+                        card.classList.remove('filtered-out');
+                        if (query.length > 0) {
+                            card.classList.add('highlighted');
+                            // Highlight text in cards
+                            this.highlightCardText(card, query);
+                        } else {
+                            card.classList.remove('highlighted');
+                            this.removeCardHighlights(card);
+                        }
+                    } else {
+                        // Hide non-matching cards
+                        card.classList.add('filtered-out');
+                        card.classList.remove('highlighted');
+                    }
+                });
+
+                // Show/hide no results message for main modules
+                const hasMainModuleResults = Array.from(this.cards).some(card =>
+                    !card.classList.contains('filtered-out')
+                );
+
+                if (query.length > 0 && !hasMainModuleResults && results.length === 0) {
+                    this.noResults.classList.remove('hidden');
+                    this.modulesGrid.style.opacity = '0.3';
+                } else {
+                    this.noResults.classList.add('hidden');
+                    this.modulesGrid.style.opacity = '1';
+                }
+            }
+
+            highlightCardText(card, query) {
+                const title = card.querySelector('h3');
+                const description = card.querySelector('p');
+
+                if (!title.getAttribute('data-original')) {
+                    title.setAttribute('data-original', title.innerHTML);
+                    description.setAttribute('data-original', description.innerHTML);
+                }
+
+                title.innerHTML = this.highlightText(title.getAttribute('data-original'), query);
+                description.innerHTML = this.highlightText(description.getAttribute('data-original'), query);
+            }
+
+            removeCardHighlights(card) {
+                const title = card.querySelector('h3');
+                const description = card.querySelector('p');
+
+                if (title.getAttribute('data-original')) {
+                    title.innerHTML = title.getAttribute('data-original');
+                    description.innerHTML = description.getAttribute('data-original');
+                }
+            }
+
+            showSearchResults() {
+                this.searchResults.classList.add('visible');
+            }
+
+            hideSearchResults() {
+                this.searchResults.classList.remove('visible');
+            }
+
+            clearSearch() {
+                this.searchInput.value = '';
+                this.clearButton.classList.remove('visible');
+                this.resetView();
+                this.hideSearchResults();
+                this.searchInput.focus();
+            }
+
+            resetView() {
+                // Reset all cards
+                this.cards.forEach(card => {
+                    card.classList.remove('filtered-out', 'highlighted');
+                    this.removeCardHighlights(card);
+                });
+
+                // Hide no results
+                this.noResults.classList.add('hidden');
+                this.modulesGrid.style.opacity = '1';
+            }
+
+            handleKeydown(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const firstResult = this.searchResultsContent.querySelector('.search-result-item');
+                    if (firstResult) {
+                        firstResult.click();
+                    }
+                }
+            }
+        }
+
+        // Global function for clear search (used by no results button)
+        function clearSearch() {
+            if (window.globalSearch) {
+                window.globalSearch.clearSearch();
+            }
+        }
+
+        // Initialize search when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            window.globalSearch = new GlobalSearch();
+
+            // Add keyboard shortcut (Ctrl/Cmd + K)
+            document.addEventListener('keydown', function (e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('global-search').focus();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

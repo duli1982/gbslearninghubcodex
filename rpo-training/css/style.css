@@ -1,0 +1,124 @@
+body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .google-sans {
+            font-family: 'Google Sans', sans-serif;
+        }
+        .site-header {
+            border-bottom: 1px solid #dadce0;
+        }
+        .content-section {
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .content-section:last-child {
+            border-bottom: none;
+        }
+        .prompt-box {
+            background-color: #f1f3f4;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+        }
+        .step-box, .session-card, .module-card {
+            background-color: #ffffff;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .session-card, .module-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        .session-card:hover, .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .quote-box {
+            background-color: #e8f0fe;
+            border-left: 4px solid #1967d2;
+            padding: 1.5rem;
+            border-radius: 4px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .phase-section {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+}
+.back-to-hub-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: #4A90E2; /* Randstad Blue */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* rounded-full */
+}
+
+/* Back to Top Button Styles */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1967d2, #1557b0);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(25, 103, 210, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    transform: translateY(10px);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: linear-gradient(135deg, #1557b0, #1348a0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(25, 103, 210, 0.4);
+}
+
+.back-to-top:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(25, 103, 210, 0.3);
+}
+
+/* Mobile adjustments for back to top button */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+    }
+}

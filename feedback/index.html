@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Randstad GBS Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../shared/hub-button.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        .google-sans {
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .feedback-form {
+            background: white;
+            border: 1px solid #dadce0;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-input {
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1967d2;
+            box-shadow: 0 0 0 3px rgba(25, 103, 210, 0.1);
+        }
+
+        .submit-btn {
+            background: #1967d2;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .submit-btn:hover {
+            background: #1557b0;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="google-sans text-xl font-bold text-gray-900">Randstad GBS Learning Hub</a>
+                <a href="/" class="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200">← Back to
+                    Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+
+        <header class="text-center mb-12">
+            <h1 class="google-sans text-4xl md:text-5xl font-bold text-gray-900 mb-4">We Value Your Feedback</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Help us improve the Learning Hub by sharing your
+                thoughts, suggestions, and experiences. Your input drives our continuous improvement.</p>
+        </header>
+
+        <main class="max-w-3xl mx-auto">
+            <div class="feedback-form p-8">
+                <!-- Hidden iframe to handle form submission -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {showSuccessMessage();}"></iframe>
+
+                <form id="feedbackForm" class="space-y-6" action="YOUR_GOOGLE_FORM_ACTION_URL" method="POST" target="hidden_iframe">
+
+                    <!-- Feedback Type -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Feedback Type</label>
+                        <select name="entry.FEEDBACK_TYPE_ENTRY_ID" class="form-input w-full px-4 py-3 text-gray-700" required>
+                            <option value="">Select feedback type...</option>
+                            <option value="General Feedback">General Feedback</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Feature Request">Feature Request</option>
+                            <option value="Content Suggestion">Content Suggestion</option>
+                            <option value="Training Program Feedback">Training Program Feedback</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Related Page/Section -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Related Page/Section
+                            (Optional)</label>
+                        <select name="entry.RELATED_SECTION_ENTRY_ID" class="form-input w-full px-4 py-3 text-gray-700">
+                            <option value="">Select if applicable...</option>
+                            <option value="RPO AI Acceleration Program">RPO AI Acceleration Program</option>
+                            <option value="Guide for GBS Leaders">Guide for GBS Leaders</option>
+                            <option value="Daily Sourcing Focus">Daily Sourcing Focus</option>
+                            <option value="GBS Prompt Library">GBS Prompt Library</option>
+                            <option value="Knowledge Content">Knowledge Content</option>
+                            <option value="AI SME">AI SME</option>
+                            <option value="Sourcing Workshop">Sourcing Workshop</option>
+                            <option value="General Site">General Site</option>
+                        </select>
+                    </div>
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Your Name</label>
+                        <input type="text" name="entry.NAME_ENTRY_ID" class="form-input w-full px-4 py-3 text-gray-700"
+                            placeholder="Enter your name" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                        <input type="email" name="entry.EMAIL_ENTRY_ID" class="form-input w-full px-4 py-3 text-gray-700"
+                            placeholder="your.email@randstad.com" required>
+                    </div>
+
+                    <!-- Department/Role -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Department/Role (Optional)</label>
+                        <input type="text" name="entry.DEPARTMENT_ENTRY_ID" class="form-input w-full px-4 py-3 text-gray-700"
+                            placeholder="e.g., RPO, GBS Leadership, Sourcing">
+                    </div>
+
+                    <!-- Rating -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Overall Experience Rating</label>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-1">
+                                <input type="radio" name="entry.RATING_ENTRY_ID" value="Excellent" id="rating5" class="text-blue-600">
+                                <label for="rating5" class="text-sm text-gray-700">Excellent</label>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <input type="radio" name="entry.RATING_ENTRY_ID" value="Good" id="rating4" class="text-blue-600">
+                                <label for="rating4" class="text-sm text-gray-700">Good</label>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <input type="radio" name="entry.RATING_ENTRY_ID" value="Average" id="rating3" class="text-blue-600">
+                                <label for="rating3" class="text-sm text-gray-700">Average</label>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <input type="radio" name="entry.RATING_ENTRY_ID" value="Poor" id="rating2" class="text-blue-600">
+                                <label for="rating2" class="text-sm text-gray-700">Poor</label>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <input type="radio" name="entry.RATING_ENTRY_ID" value="Very Poor" id="rating1" class="text-blue-600">
+                                <label for="rating1" class="text-sm text-gray-700">Very Poor</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback Message -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Your Feedback</label>
+                        <textarea name="entry.MESSAGE_ENTRY_ID" rows="6"
+                            class="form-input w-full px-4 py-3 text-gray-700 resize-vertical"
+                            placeholder="Please share your detailed feedback, suggestions, or report any issues you've encountered..."
+                            required></textarea>
+                    </div>
+
+                    <!-- Suggestions for Improvement -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Suggestions for Improvement
+                            (Optional)</label>
+                        <textarea name="entry.SUGGESTIONS_ENTRY_ID" rows="4"
+                            class="form-input w-full px-4 py-3 text-gray-700 resize-vertical"
+                            placeholder="What specific improvements would you like to see?"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4">
+                        <button type="submit" class="submit-btn w-full py-4 px-6 text-white font-semibold rounded-lg">
+                            Submit Feedback
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMessage" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <p class="text-green-800 font-medium">Thank you for your feedback! We'll review it and get back
+                            to you if needed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <h3 class="google-sans text-lg font-bold text-gray-900 mb-3">Quick Response</h3>
+                    <p class="text-gray-600 text-sm mb-4">For urgent issues or immediate assistance, you can also reach
+                        out directly:</p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Email: learning-hub@randstad.com</li>
+                        <li>• Teams: GBS Learning Hub Support</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <h3 class="google-sans text-lg font-bold text-gray-900 mb-3">What Happens Next?</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li>• We review all feedback within 2-3 business days</li>
+                        <li>• Bug reports are prioritized for quick fixes</li>
+                        <li>• Feature requests are evaluated for future releases</li>
+                        <li>• You'll receive updates on significant improvements</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="footer-placeholder"></div>
+    <script src="../shared/scripts/footer.js" defer></script>
+
+    <script>
+        var submitted = false;
+
+        // Function to show success message after form submission
+        function showSuccessMessage() {
+            if (submitted) {
+                document.getElementById('feedbackForm').style.display = 'none';
+                document.getElementById('successMessage').classList.remove('hidden');
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            submitted = true;
+            // Form will submit to Google Forms automatically
+            // Success message will show when iframe loads
+        });
+    </script>
+
+</body>
+
+</html>

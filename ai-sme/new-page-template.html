@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Page Template - AI Horizon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link to the shared color palette -->
+    <link rel="stylesheet" href="../../shared/ai-sme-colors.css">
+    <script>
+        // Tailwind config using the new CSS variables
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': 'var(--ai-accent)',
+                        'brand-primary-hover': 'var(--ai-accent-hover)',
+                        'brand-dark': 'var(--ai-heading)',
+                        'brand-body': 'var(--ai-text)',
+                        'brand-muted': 'var(--ai-text)',
+                        'brand-bg': 'var(--ai-bg)',
+                        'brand-card-bg': 'var(--ai-card)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* You can add page-specific styles here if needed */
+        body {
+            background-color: var(--ai-bg);
+            color: var(--ai-text);
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-body font-sans leading-relaxed">
+
+    <!-- Header & Navigation (Consistent with index.html) -->
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-brand-dark flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-brand-primary"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                AI Horizon
+            </a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="index.html#home" class="text-brand-body hover:text-brand-primary transition-colors duration-300">Home</a>
+                <a href="index.html#get-started" class="text-brand-body hover:text-brand-primary transition-colors duration-300">Get Started</a>
+                <a href="index.html#learning-hub" class="text-brand-body hover:text-brand-primary transition-colors duration-300">Learning Hub</a>
+            </nav>
+            <a href="index.html#community" class="hidden md:inline-block btn-ai-primary">Get Help</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <section>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-ai-heading mb-4">New Page Title</h1>
+            <p class="text-lg md:text-xl text-ai-text mb-8">
+                This is a template for creating new pages. It uses the shared color palette from
+                <code class="bg-gray-200 text-sm p-1 rounded">shared/ai-sme-colors.css</code>.
+                Below are examples of how to apply the new styles.
+            </p>
+
+            <div class="space-y-12">
+                <!-- Text and Headings -->
+                <div>
+                    <h2 class="text-3xl font-bold text-ai-heading border-b border-ai-border pb-2 mb-4">Text and Headings</h2>
+                    <p class="text-ai-text mb-4">This is a standard paragraph using <code class="bg-gray-200 text-sm p-1 rounded">.text-ai-text</code>. The main text color is <span style="color:var(--ai-text)">#4A4A4A</span>.</p>
+                    <h3 class="text-2xl font-bold text-ai-heading mb-2">This is a Sub-Heading (h3)</h3>
+                    <p class="text-ai-text mb-4">Headings use <code class="bg-gray-200 text-sm p-1 rounded">.text-ai-heading</code>, which is <span style="color:var(--ai-heading)">#111827</span>.</p>
+                    <a href="#" class="text-ai-accent hover:underline">This is a link using .text-ai-accent</a>
+                </div>
+
+                <!-- Buttons -->
+                <div>
+                    <h2 class="text-3xl font-bold text-ai-heading border-b border-ai-border pb-2 mb-4">Buttons</h2>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <button class="btn-ai-primary">Primary Button</button>
+                        <button class="btn-ai-secondary">Secondary Button</button>
+                        <p class="text-ai-text">Use classes <code class="bg-gray-200 text-sm p-1 rounded">.btn-ai-primary</code> and <code class="bg-gray-200 text-sm p-1 rounded">.btn-ai-secondary</code>.</p>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div>
+                    <h2 class="text-3xl font-bold text-ai-heading border-b border-ai-border pb-2 mb-4">Cards</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card-ai">
+                            <h3 class="text-xl font-bold text-ai-heading mb-2">Standard Card</h3>
+                            <p class="text-ai-text">This card uses the <code class="bg-gray-200 text-sm p-1 rounded">.card-ai</code> class from the shared CSS file. It includes background color, padding, border, radius, and shadow effects.</p>
+                        </div>
+                        <div class="card-ai">
+                            <h3 class="text-xl font-bold text-ai-heading mb-2">Another Card</h3>
+                            <p class="text-ai-text">Just by reusing the <code class="bg-gray-200 text-sm p-1 rounded">.card-ai</code> class, you get a consistent look and feel across all card elements on the site.</p>
+                        </div>
+                        <div class="bg-ai-card p-6 rounded-lg border border-ai-border shadow-ai-sm">
+                             <h3 class="text-xl font-bold text-ai-heading mb-2">Manual Card</h3>
+                            <p class="text-ai-text">You can also construct cards manually using utility classes with the color variables, but the pre-built class is easier.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../shared/scripts/footer.js" defer></script>
+
+</body>
+</html>
