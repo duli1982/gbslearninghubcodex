@@ -1,4 +1,4 @@
-import { qs } from '../utils/dom-helpers.js';
+import { $ } from '../utils/dom-helpers.js';
 
 /**
  * A reusable dropdown component.
@@ -28,8 +28,16 @@ import { qs } from '../utils/dom-helpers.js';
  */
 export function initializeDropdown(dropdownElement) {
   try {
-    const button = qs('[data-dropdown-button]', { parent: dropdownElement, required: true });
-    const menu = qs('[data-dropdown-menu]', { parent: dropdownElement, required: true });
+    const requireElement = (selector) => {
+      const element = $(selector, dropdownElement);
+      if (!element) {
+        throw new Error(`Required element with selector "${selector}" not found.`);
+      }
+      return element;
+    };
+
+    const button = requireElement('[data-dropdown-button]');
+    const menu = requireElement('[data-dropdown-menu]');
 
     /**
      * Toggles the visibility of the dropdown menu with animations.
@@ -70,9 +78,9 @@ export function initializeDropdown(dropdownElement) {
 
     // Close dropdown when an item inside the menu is clicked
     menu.addEventListener('click', () => {
-        if (!menu.classList.contains('hidden')) {
-            toggleMenu();
-        }
+      if (!menu.classList.contains('hidden')) {
+        toggleMenu();
+      }
     });
 
   } catch (error) {
