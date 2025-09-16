@@ -10,34 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Link to the shared color palette -->
     <link rel="stylesheet" href="../../shared/ai-sme-colors.css">
-    <script>
-        // Tailwind config using the new CSS variables
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'brand-primary': 'var(--ai-accent)',
-                        'brand-primary-hover': 'var(--ai-accent-hover)',
-                        'brand-dark': 'var(--ai-heading)',
-                        'brand-body': 'var(--ai-text)',
-                        'brand-muted': 'var(--ai-text)',
-                        'brand-bg': 'var(--ai-bg)',
-                        'brand-card-bg': 'var(--ai-card)',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* You can add page-specific styles here if needed */
-        body {
-            background-color: var(--ai-bg);
-            color: var(--ai-text);
-        }
-    </style>
+    <script src="../shared/scripts/pages/ai-sme-tailwind-config.js"></script>
+    <link rel="stylesheet" href="../shared/styles/pages/ai-sme.css">
 </head>
 <body class="bg-brand-bg text-brand-body font-sans leading-relaxed">
 

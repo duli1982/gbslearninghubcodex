@@ -1,0 +1,450 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F8F7F4;
+    /* Soft off-white background */
+    color: #4A4A4A;
+    /* Dark gray text used across the site */
+}
+
+/* --- Custom Scrollbar for lists --- */
+.scrollable-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* --- General Card Style with Hover Animation --- */
+.prompt-block {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prompt-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Homepage Category Card --- */
+.category-card-list {
+    height: 200px;
+}
+
+.category-card-list a:hover {
+    color: #4A90E2;
+}
+
+.see-all-btn {
+    border: 1px solid #4A90E2;
+    color: #4A90E2;
+    transition: all 0.2s ease-in-out;
+}
+
+.see-all-btn:hover {
+    background-color: #4A90E2;
+    color: white;
+}
+
+/* --- Detail Page Prompt Display --- */
+.prompt-display-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background-color: #FFFFFF;
+}
+
+/* --- Quick Links Sidebar --- */
+.quick-links-sidebar {
+    height: calc(100vh - 100px);
+}
+
+.quick-links-sidebar a {
+    transition: color 0.2s ease;
+}
+
+.quick-links-sidebar a:hover,
+.quick-links-sidebar a.active {
+    color: #4A90E2;
+}
+
+/* --- General UI Elements --- */
+.main-heading {
+    color: #111827;
+}
+
+.accent-text {
+    color: #4A90E2;
+}
+
+.hidden {
+    display: none;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.subtitle-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.subtitle-animate-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.h-8 {
+    min-height: 2rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Difficulty Badge Styles (site-wide; unchanged) */
+.difficulty-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin-bottom: 8px;
+    margin-right: 8px;
+}
+
+.difficulty-beginner {
+    background-color: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+}
+
+.difficulty-intermediate {
+    background-color: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+}
+
+.difficulty-advanced {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+.difficulty-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.difficulty-beginner::before {
+    background-color: #10B981;
+}
+
+.difficulty-intermediate::before {
+    background-color: #F59E0B;
+}
+
+.difficulty-advanced::before {
+    background-color: #EF4444;
+}
+
+.time-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background-color: #F3F4F6;
+    color: #4B5563;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.time-badge::before {
+    content: '⏱️';
+    margin-right: 4px;
+}
+
+/* ===== Quick Start / Pro Tips / Expected Output styles ===== */
+.quick-start-section {
+    background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+    color: #fff;
+    /* default gradient skin keeps white text */
+    padding: 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-start-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, .1);
+    backdrop-filter: blur(10px);
+    z-index: 0;
+}
+
+.quick-start-content {
+    position: relative;
+    z-index: 1;
+}
+
+.quick-start-title {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fff;
+}
+
+.quick-start-title::before {
+    content: '🚀';
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.quick-start-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    counter-reset: step-counter;
+}
+
+.quick-start-steps li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 8px;
+    border-left: 3px solid #10B981;
+}
+
+.quick-start-steps li::before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #10B981;
+    color: #fff;
+    border-radius: 50%;
+    font-size: .75rem;
+    font-weight: 700;
+    margin-right: 12px;
+}
+
+.quick-start-tips h4 {
+    font-size: .875rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #F3F4F6;
+    display: flex;
+    align-items: center;
+}
+
+.quick-start-tips h4::before {
+    content: '💡';
+    margin-right: 6px;
+}
+
+.quick-start-tips ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: .875rem;
+    opacity: .95;
+}
+
+.quick-start-tips li {
+    margin-bottom: 6px;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    display: list-item !important;
+}
+
+.quick-start-section.plain {
+    background: transparent;
+    color: #374151;
+    border: 1px solid #E5E7EB;
+}
+
+.quick-start-section.white {
+    background: #fff;
+    color: #111827;
+    border: 1px solid #E5E7EB;
+}
+
+.expected-output {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.expected-output .expected-output-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* small badges used by the original sections */
+.difficulty-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-right: 8px;
+}
+
+.time-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: #F3F4F6;
+    color: #4B5563;
+    border-radius: 12px;
+    font-size: .75rem;
+    margin-bottom: 8px;
+    border: 1px solid #E5E7EB;
+}
+
+.time-badge::before {
+    content: '⏱️';
+    margin-right: 6px;
+}
+
+/* --- Scroll to Top Button --- */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: #3A7BC8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4);
+}
+
+/* ===== OVERRIDES: make Quick Start & Pro Tips match site text and neutralize green accents ===== */
+
+/* Make Quick Start title + Pro Tips heading and their content use the same text color as page body */
+.quick-start-section.plain .quick-start-title,
+.quick-start-section.plain .quick-start-tips h4,
+.quick-start-section.plain,
+.quick-start-section.plain .quick-start-steps,
+.quick-start-section.plain .quick-start-tips,
+.quick-start-section.plain .quick-start-steps li,
+.quick-start-section.plain .quick-start-steps li::before,
+.quick-start-section.white .quick-start-title,
+.quick-start-section.white .quick-start-tips h4,
+.quick-start-section.white,
+.quick-start-section.white .quick-start-steps,
+.quick-start-section.white .quick-start-tips,
+.quick-start-section.white .quick-start-steps li,
+.quick-start-section.white .quick-start-steps li::before {
+    color: #4A4A4A !important;
+    /* site body color */
+}
+
+/* Remove the green left border on step rows (make transparent) */
+.quick-start-section .quick-start-steps li {
+    border-left-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Make the numbered circle transparent (no filled green), keep the number visible */
+.quick-start-section .quick-start-steps li::before {
+    background: transparent !important;
+    /* remove green fill */
+    color: #4A4A4A !important;
+    /* number uses page text color */
+    border: 1px solid #E5E7EB !important;
+    /* soft outline so circle remains visible */
+    box-shadow: none !important;
+    font-weight: 700 !important;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure the Pro Tips emoji inherits the text color */
+.quick-start-section .quick-start-tips h4::before {
+    color: inherit !important;
+    filter: none !important;
+}
+
+/* Neutralize difficulty/time badge inside quick-start area (if present) */
+.quick-start-section .difficulty-badge,
+.quick-start-section .time-badge {
+    background: transparent !important;
+    color: #4A4A4A !important;
+    border-color: #E5E7EB !important;
+    box-shadow: none !important;
+}
