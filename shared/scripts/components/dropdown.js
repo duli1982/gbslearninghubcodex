@@ -1,4 +1,4 @@
-import { $ } from '../utils/dom-helpers.js';
+import { requireElement } from '../utils/dom-helpers.js';
 
 /**
  * A reusable dropdown component.
@@ -28,16 +28,8 @@ import { $ } from '../utils/dom-helpers.js';
  */
 export function initializeDropdown(dropdownElement) {
   try {
-    const requireElement = (selector) => {
-      const element = $(selector, dropdownElement);
-      if (!element) {
-        throw new Error(`Required element with selector "${selector}" not found.`);
-      }
-      return element;
-    };
-
-    const button = requireElement('[data-dropdown-button]');
-    const menu = requireElement('[data-dropdown-menu]');
+    const button = requireElement('[data-dropdown-button]', dropdownElement);
+    const menu = requireElement('[data-dropdown-menu]', dropdownElement);
 
     /**
      * Toggles the visibility of the dropdown menu with animations.

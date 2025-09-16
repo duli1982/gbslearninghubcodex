@@ -1,4 +1,4 @@
-import { $, $$ } from '../utils/dom-helpers.js';
+import { $$, requireElement } from '../utils/dom-helpers.js';
 
 /**
  * A reusable mobile navigation component.
@@ -16,14 +16,6 @@ import { $, $$ } from '../utils/dom-helpers.js';
  */
 export function initializeNavigation() {
   try {
-    const requireElement = (selector, parent = document) => {
-      const element = $(selector, parent);
-      if (!element) {
-        throw new Error(`Required element with selector "${selector}" not found.`);
-      }
-      return element;
-    };
-
     const openBtn = requireElement('[data-mobile-menu-button]');
     const menu = requireElement('[data-mobile-menu]');
     const overlay = requireElement('[data-mobile-menu-overlay]');
