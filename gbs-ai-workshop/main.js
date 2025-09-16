@@ -27,8 +27,10 @@ function initBackToTopButton() {
   const backToTopBtn = $('#back-to-top');
   if (!backToTopBtn) return; // Exit if the button isn't on the page
 
+  const SCROLL_THRESHOLD = 300;
+
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (window.scrollY > SCROLL_THRESHOLD) {
       backToTopBtn.classList.add('visible');
     } else {
       backToTopBtn.classList.remove('visible');
@@ -40,7 +42,7 @@ function initBackToTopButton() {
   };
 
   backToTopBtn.addEventListener('click', scrollToTop);
-  window.addEventListener('scroll', toggleVisibility);
+  window.addEventListener('scroll', toggleVisibility, { passive: true });
   toggleVisibility(); // Initial check on page load
 }
 
