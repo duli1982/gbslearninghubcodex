@@ -6,6 +6,7 @@
     <title>Gemini Training & Knowledge Content</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../shared/hub-button.css">
+    <link rel="stylesheet" href="../shared/back-to-top.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -101,12 +102,14 @@
     </div>
 
     <a href="../index.html" class="hub-button">Back To Hub</a>
-<button id="back-to-top" title="Back to top" aria-label="Scroll to top">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round">
-        <path d="m18 15-6-6-6 6" />
-    </svg>
-</button>
+    <button id="back-to-top" class="back-to-top" data-back-to-top title="Back to top" aria-label="Scroll to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m18 15-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script type="module" src="../shared/scripts/pages/knowledge-content.js"></script>
 
     
 </body>
