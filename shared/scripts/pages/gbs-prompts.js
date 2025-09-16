@@ -1,5 +1,7 @@
 import { BackToTop } from '../gbs-core.js';
 
+const PROMPTS_DATA_URL = new URL('../../../gbs-prompts/prompts.json', import.meta.url);
+
 // --- DATA STRUCTURE ---
 let promptData = {};
 let allPrompts = [];
@@ -33,7 +35,7 @@ async function loadPrompts() {
     loadingIndicator.classList.remove('hidden');
 
     try {
-        const response = await fetch('./prompts.json');
+        const response = await fetch(PROMPTS_DATA_URL);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

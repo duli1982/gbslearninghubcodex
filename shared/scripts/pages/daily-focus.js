@@ -13,6 +13,7 @@ const cardNavigation = document.getElementById('card-navigation');
 const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const cardCounter = document.getElementById('card-counter');
+const FOCUS_DATA_URL = new URL('../../../daily-focus/focus.json', import.meta.url);
 
 // --- State Management ---
 function initializeData(focusPointsData) {
@@ -203,7 +204,7 @@ function updateActiveFilterButton(activeCategory) {
 
 // --- Initial Load & Event Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('focus.json')
+    fetch(FOCUS_DATA_URL)
         .then(response => response.json())
         .then(data => {
             initializeData(data);
