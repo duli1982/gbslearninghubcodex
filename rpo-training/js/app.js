@@ -1,3 +1,6 @@
+import { BackToTop } from '../../shared/scripts/gbs-core.js';
+import StorageManager from '../../shared/scripts/utils/storage-manager.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const mainPage = document.getElementById('main-page');
     const sessionContainer = document.getElementById('session-container');
@@ -124,12 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function navigateTo(pageId) {
         // Store the scroll position if leaving the main page
         if (document.getElementById('main-page').classList.contains('active') && pageId !== 'main-page') {
-            sessionStorage.setItem('mainPageScrollPosition', window.scrollY);
-        }
-
-        // This part seems to be for a different scroll position saving logic, removing it to avoid conflict
-        if (pageId !== 'main-page') {
-            sessionStorage.setItem('scrollPosition', window.scrollY);
+            StorageManager.scroll.save();
         }
 
         // Hide all pages by default
@@ -140,11 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
             mainPage.classList.add('active');
             sessionContainer.textContent = '';
             // Restore scroll position if returning to the main page
-            const savedPosition = sessionStorage.getItem('mainPageScrollPosition');
-            if (savedPosition) {
-                window.scrollTo(0, parseInt(savedPosition, 10) - 100); // Added -100 for a little buffer above
-                sessionStorage.removeItem('scrollPosition');
-            }
+            StorageManager.scroll.restore();
+            StorageManager.module.clear();
         } else if (pageId.startsWith('module-')) {
             showSessionMenu(pageId);
         } else {
@@ -166,17 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Re-attach event listeners for any new buttons in the loaded content if necessary
                     const backButton = sessionContainer.querySelector('button');
                     // Store the current module ID before navigating to a session
-                    const currentModuleId = sessionStorage.getItem('currentModuleId');
-                    if (currentModuleId) {
-                        sessionStorage.setItem('lastVisitedModule', currentModuleId);
-                    }
+                    const currentModuleId = StorageManager.module.getCurrent();
 
                     if (backButton) {
                         backButton.addEventListener('click', () => {
-                            const lastModule = sessionStorage.getItem('lastVisitedModule');
-                            if (lastModule) {
-                                navigateTo(lastModule);
-                                sessionStorage.removeItem('lastVisitedModule'); // Clear after use
+                            if (currentModuleId) {
+                                navigateTo(currentModuleId);
                             } else {
                                 navigateTo('main-page');
                             }
@@ -201,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Store the current module ID when navigating to a module session menu
         if (pageId.startsWith('module-')) {
-            sessionStorage.setItem('currentModuleId', pageId);
+            StorageManager.module.setCurrent(pageId);
         }
 
     }
@@ -222,34 +212,5 @@ document.addEventListener('DOMContentLoaded', () => {
         navigateTo('main-page');
     }
 
-    // --- Back to Top Button Logic ---
-    const backToTopBtn = document.getElementById('back-to-top');
-    
-    // Show/hide back to top button based on scroll position
-    function toggleBackToTopButton() {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    }
-    
-    // Smooth scroll to top function
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-    
-    // Event listeners for back to top
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener('click', scrollToTop);
-    }
-    
-    // Show/hide button on scroll
-    window.addEventListener('scroll', toggleBackToTopButton);
-    
-    // Initial check on page load
-    toggleBackToTopButton();
+    new BackToTop();
 });

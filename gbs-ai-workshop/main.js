@@ -1,6 +1,7 @@
 import { $, $$ } from '../shared/scripts/utils/dom-helpers.js';
 import { initializeDropdown } from '../shared/scripts/components/dropdown.js';
 import { initializeNavigation } from '../shared/scripts/components/navigation.js';
+import { BackToTop } from '../shared/scripts/gbs-core.js';
 
 /**
  * Initializes all dropdown components on the page by finding
@@ -53,7 +54,7 @@ function initBackToTopButton() {
 function main() {
   try {
     initComponents();
-    initBackToTopButton();
+    new BackToTop();
     // NOTE: Other page-specific logic (like charts, simulators, etc.)
     // will be progressively moved from the inline script to this file or other modules.
     console.log("GBS AI Workshop page scripts initialized successfully.");
