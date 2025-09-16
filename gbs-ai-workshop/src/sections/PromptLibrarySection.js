@@ -1,12 +1,19 @@
-import { prompts } from '../data/prompts.js';
+import { loadPromptsData } from '../data/loaders.js';
 import { addPromptToLibrary, removePromptFromLibrary, onLibraryChange } from '../services/firebaseService.js';
 
 let currentFilter = 'All';
 let promptLibraryElement;
 let libraryState = [];
 let filterButtons = [];
+let promptsData = [];
+let promptsLoaded = false;
+let promptsLoading = false;
+let promptsLoadError = null;
+let isInitialized = false;
 
 export function initPromptLibrarySection() {
+    if (isInitialized) return;
+
     promptLibraryElement = document.getElementById('prompt-library');
     if (!promptLibraryElement) return;
 
@@ -41,17 +48,36 @@ export function initPromptLibrarySection() {
         renderPromptLibrary();
     });
 
-    renderPromptLibrary();
+    isInitialized = true;
+
+    setLoadingState('Loading prompts...');
+    void loadPrompts();
 }
 
 function renderPromptLibrary() {
     if (!promptLibraryElement) return;
 
-    promptLibraryElement.innerHTML = '';
-    const filteredPrompts = currentFilter === 'All'
-        ? prompts
-        : prompts.filter((prompt) => prompt.category === currentFilter);
+    if (!promptsLoaded) {
+        if (promptsLoadError) {
+            promptLibraryElement.innerHTML = `<div class="col-span-full text-center text-red-500 py-8">Unable to load prompts right now.</div>`;
+        } else if (promptsLoading) {
+            setLoadingState('Loading prompts...');
+        } else {
+            promptLibraryElement.innerHTML = `<div class="col-span-full text-center text-gray-500 py-8">No prompts available.</div>`;
+        }
+        return;
+    }
 
+    const filteredPrompts = currentFilter === 'All'
+        ? promptsData
+        : promptsData.filter((prompt) => prompt.category === currentFilter);
+
+    if (!filteredPrompts.length) {
+        promptLibraryElement.innerHTML = `<div class="col-span-full text-center text-gray-500 py-8">No prompts found for this filter.</div>`;
+        return;
+    }
+
+    promptLibraryElement.innerHTML = '';
     filteredPrompts.forEach((prompt) => {
         const isFavorited = libraryState.some((entry) => entry.type === 'favorite' && entry.originalId === prompt.id);
         const card = createPromptCard(prompt, isFavorited);
@@ -74,4 +100,26 @@ function createPromptCard(prompt, isFavorited) {
         </div>
     `;
     return card;
+}
+
+function setLoadingState(message) {
+    if (!promptLibraryElement) return;
+    promptLibraryElement.innerHTML = `<div class="col-span-full text-center text-gray-500 py-8 animate-pulse">${message}</div>`;
+}
+
+async function loadPrompts() {
+    if (promptsLoaded || promptsLoading) return;
+    promptsLoading = true;
+    promptsLoadError = null;
+
+    try {
+        promptsData = await loadPromptsData();
+        promptsLoaded = true;
+    } catch (error) {
+        promptsLoadError = error;
+        console.error('Failed to load prompts data', error);
+    } finally {
+        promptsLoading = false;
+        renderPromptLibrary();
+    }
 }

@@ -1,12 +1,20 @@
-import { prompts } from '../data/prompts.js';
+import { loadPromptsData } from '../data/loaders.js';
 import { onLibraryChange, removePromptFromLibrary } from '../services/firebaseService.js';
 
 let customList;
 let favoriteList;
 let noCustomMessage;
 let noFavoriteMessage;
+let libraryState = [];
+let promptsData = [];
+let promptsLoaded = false;
+let promptsLoading = false;
+let promptsLoadError = null;
+let isInitialized = false;
 
 export function initMyLibrarySection() {
+    if (isInitialized) return;
+
     customList = document.getElementById('my-custom-prompts-list');
     favoriteList = document.getElementById('my-favorite-prompts-list');
     noCustomMessage = document.getElementById('no-custom-prompts');
@@ -26,17 +34,25 @@ export function initMyLibrarySection() {
         removePromptFromLibrary(button.getAttribute('data-unfavorite-id'));
     });
 
-    onLibraryChange(renderLibrary);
+    onLibraryChange((library) => {
+        libraryState = library;
+        renderLibrary();
+    });
+
+    isInitialized = true;
+
+    renderLibrary();
+    void loadPrompts();
 }
 
-function renderLibrary(library = []) {
+function renderLibrary() {
     if (!customList || !favoriteList) return;
 
     customList.innerHTML = '';
     favoriteList.innerHTML = '';
 
-    const customPrompts = library.filter((entry) => entry.type === 'custom');
-    const favoritePrompts = library.filter((entry) => entry.type === 'favorite');
+    const customPrompts = libraryState.filter((entry) => entry.type === 'custom');
+    const favoritePrompts = libraryState.filter((entry) => entry.type === 'favorite');
 
     if (customPrompts.length) {
         noCustomMessage?.classList.add('hidden');
@@ -51,14 +67,37 @@ function renderLibrary(library = []) {
     }
 
     if (favoritePrompts.length) {
+        if (!promptsLoaded && !promptsLoading) {
+            void loadPrompts();
+        }
+
         noFavoriteMessage?.classList.add('hidden');
         favoriteList.classList.remove('hidden');
+
+        if (promptsLoadError) {
+            favoriteList.innerHTML = `<div class="col-span-full text-center text-red-500 py-4">Unable to load your saved prompts right now.</div>`;
+            return;
+        }
+
+        if (!promptsLoaded) {
+            favoriteList.innerHTML = `<div class="col-span-full text-center text-gray-500 py-4 animate-pulse">Loading your saved prompts...</div>`;
+            return;
+        }
+
+        const promptsById = new Map(promptsData.map((prompt) => [prompt.id, prompt]));
+        let renderedCount = 0;
+
         favoritePrompts.forEach((entry) => {
-            const originalPrompt = prompts.find((prompt) => prompt.id === entry.originalId);
+            const originalPrompt = promptsById.get(entry.originalId);
             if (!originalPrompt) return;
             const card = createFavoritePromptCard(originalPrompt, entry.id);
             favoriteList.appendChild(card);
+            renderedCount += 1;
         });
+
+        if (renderedCount === 0) {
+            favoriteList.innerHTML = `<div class="col-span-full text-center text-gray-500 py-4">Saved prompts are currently unavailable.</div>`;
+        }
     } else {
         favoriteList.classList.add('hidden');
         noFavoriteMessage?.classList.remove('hidden');
@@ -93,4 +132,21 @@ function createFavoritePromptCard(prompt, libraryId) {
         </div>
     `;
     return card;
+}
+
+async function loadPrompts() {
+    if (promptsLoaded || promptsLoading) return;
+    promptsLoading = true;
+    promptsLoadError = null;
+
+    try {
+        promptsData = await loadPromptsData();
+        promptsLoaded = true;
+    } catch (error) {
+        promptsLoadError = error;
+        console.error('Failed to load prompts for library favorites', error);
+    } finally {
+        promptsLoading = false;
+        renderLibrary();
+    }
 }

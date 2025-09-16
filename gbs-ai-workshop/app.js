@@ -25,15 +25,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.classList.add('hidden');
     };
 
-    initWhySection();
-    initHowSection();
-    initPromptLibrarySection();
-    initPromptBuilderSection();
-    initReversePromptSection();
-    initMyLibrarySection();
-
     const navigation = initNavigation({
         sectionInitializers: {
+            why: initWhySection,
+            how: initHowSection,
+            what: initPromptLibrarySection,
+            builder: initPromptBuilderSection,
+            'reverse-prompt': initReversePromptSection,
+            'my-library': initMyLibrarySection,
             'case-studies': initCaseStudiesSection,
             simulator: initSimulatorSection,
             'my-day': initMyDaySection

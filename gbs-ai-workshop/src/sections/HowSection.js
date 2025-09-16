@@ -1,42 +1,84 @@
-import { opportunityData, opportunityDetailsData } from '../data/opportunityData.js';
+import { loadOpportunityData } from '../data/loaders.js';
 import { initOpportunityChart } from '../components/charts/OpportunityChart.js';
 
-export function initHowSection() {
+let chartInitialized = false;
+let chartLoading = false;
+
+export async function initHowSection() {
     const canvas = document.getElementById('opportunityChart');
-    if (!canvas) return;
+    if (!canvas || chartInitialized || chartLoading) return;
 
     const chartContainer = document.getElementById('opportunity-details');
     const introElement = document.getElementById('opportunity-intro');
+    const chartWrapper = canvas.parentElement;
+    let loadingIndicator;
 
-    const sliders = {
-        repetitive: document.getElementById('repetitiveSlider'),
-        research: document.getElementById('researchSlider'),
-        reactive: document.getElementById('reactiveSlider'),
-        reporting: document.getElementById('reportingSlider')
-    };
+    if (chartWrapper) {
+        canvas.classList.add('hidden');
+        loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'text-center text-gray-500 py-8 animate-pulse';
+        loadingIndicator.textContent = 'Loading opportunity data...';
+        chartWrapper.appendChild(loadingIndicator);
+    }
 
-    const valueDisplays = {
-        repetitive: document.getElementById('repetitiveValue'),
-        research: document.getElementById('researchValue'),
-        reactive: document.getElementById('reactiveValue'),
-        reporting: document.getElementById('reportingValue')
-    };
+    chartLoading = true;
 
-    const totalDisplay = document.getElementById('totalPercentage');
+    try {
+        const { opportunityData, opportunityDetailsData } = await loadOpportunityData();
 
-    const clonedData = JSON.parse(JSON.stringify(opportunityData));
+        if (!opportunityData || !opportunityDetailsData) {
+            if (loadingIndicator) {
+                loadingIndicator.classList.remove('animate-pulse');
+                loadingIndicator.textContent = 'Opportunity data is unavailable.';
+            }
+            return;
+        }
 
-    initOpportunityChart({
-        canvas,
-        data: clonedData,
-        detailsData: opportunityDetailsData,
-        introElement,
-        detailsElement: chartContainer,
-        titleElement: document.getElementById('opportunity-title'),
-        descriptionElement: document.getElementById('opportunity-description'),
-        examplesList: document.getElementById('opportunity-examples'),
-        sliders,
-        valueDisplays,
-        totalDisplay
-    });
+        const sliders = {
+            repetitive: document.getElementById('repetitiveSlider'),
+            research: document.getElementById('researchSlider'),
+            reactive: document.getElementById('reactiveSlider'),
+            reporting: document.getElementById('reportingSlider')
+        };
+
+        const valueDisplays = {
+            repetitive: document.getElementById('repetitiveValue'),
+            research: document.getElementById('researchValue'),
+            reactive: document.getElementById('reactiveValue'),
+            reporting: document.getElementById('reportingValue')
+        };
+
+        const totalDisplay = document.getElementById('totalPercentage');
+
+        const clonedData = JSON.parse(JSON.stringify(opportunityData));
+
+        canvas.classList.remove('hidden');
+        loadingIndicator?.remove();
+
+        initOpportunityChart({
+            canvas,
+            data: clonedData,
+            detailsData: opportunityDetailsData,
+            introElement,
+            detailsElement: chartContainer,
+            titleElement: document.getElementById('opportunity-title'),
+            descriptionElement: document.getElementById('opportunity-description'),
+            examplesList: document.getElementById('opportunity-examples'),
+            sliders,
+            valueDisplays,
+            totalDisplay
+        });
+
+        chartInitialized = true;
+    } catch (error) {
+        console.error('Failed to load opportunity data', error);
+        if (loadingIndicator) {
+            loadingIndicator.classList.remove('animate-pulse');
+            loadingIndicator.classList.add('text-red-500');
+            loadingIndicator.textContent = 'We couldn\'t load the opportunity framework right now.';
+        }
+        canvas.classList.remove('hidden');
+    } finally {
+        chartLoading = false;
+    }
 }
