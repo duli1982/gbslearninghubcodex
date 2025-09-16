@@ -1,8 +1,33 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
 import { loadOpportunityData } from '../data/loaders.js';
 import { initOpportunityChart } from '../components/charts/OpportunityChart.js';
 
 let chartInitialized = false;
 let chartLoading = false;
+let loadingStatusIndicator = null;
+let chartCanvasRef = null;
+
+const howSectionBoundary = new ErrorBoundary({
+    id: 'how-section',
+    fallbackMessage: "We couldn't load the opportunity framework right now.",
+    renderer: ({ message }) => {
+        if (loadingStatusIndicator) {
+            loadingStatusIndicator.classList.remove('animate-pulse');
+            loadingStatusIndicator.classList.add('text-red-500');
+            loadingStatusIndicator.textContent = message;
+        } else if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+            window.alert(message);
+        }
+        if (chartCanvasRef) {
+            chartCanvasRef.classList.remove('hidden');
+        }
+    },
+    clearRenderer: () => {
+        if (loadingStatusIndicator) {
+            loadingStatusIndicator.classList.remove('text-red-500');
+        }
+    }
+});
 
 export async function initHowSection() {
     const canvas = document.getElementById('opportunityChart');
@@ -20,6 +45,10 @@ export async function initHowSection() {
         loadingIndicator.textContent = 'Loading opportunity data...';
         chartWrapper.appendChild(loadingIndicator);
     }
+
+    chartCanvasRef = canvas;
+    loadingStatusIndicator = loadingIndicator || null;
+    howSectionBoundary.clear();
 
     chartLoading = true;
 
@@ -54,6 +83,9 @@ export async function initHowSection() {
 
         canvas.classList.remove('hidden');
         loadingIndicator?.remove();
+        if (loadingStatusIndicator === loadingIndicator) {
+            loadingStatusIndicator = null;
+        }
 
         initOpportunityChart({
             canvas,
@@ -71,13 +103,10 @@ export async function initHowSection() {
 
         chartInitialized = true;
     } catch (error) {
-        console.error('Failed to load opportunity data', error);
-        if (loadingIndicator) {
-            loadingIndicator.classList.remove('animate-pulse');
-            loadingIndicator.classList.add('text-red-500');
-            loadingIndicator.textContent = 'We couldn\'t load the opportunity framework right now.';
-        }
-        canvas.classList.remove('hidden');
+        howSectionBoundary.capture(error, {
+            message: "We couldn't load the opportunity framework right now.",
+            context: { scope: 'how-section.load' }
+        });
     } finally {
         chartLoading = false;
     }

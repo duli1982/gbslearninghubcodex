@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
 import { loadMyDayEvents } from '../data/loaders.js';
 
 let myDayContainer;
@@ -6,6 +7,18 @@ let myDayEventsData = [];
 let eventsLoaded = false;
 let eventsLoading = false;
 let hasSetup = false;
+
+const myDayBoundary = new ErrorBoundary({
+    id: 'my-day-section',
+    fallbackMessage: "We couldn't load the day simulator right now. Please try again later.",
+    renderer: ({ message }) => {
+        if (myDayContainer) {
+            myDayContainer.innerHTML = `<div class="text-center text-red-500 py-8">${message}</div>`;
+        } else if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+            window.alert(message);
+        }
+    }
+});
 
 export async function initMyDaySection() {
     myDayContainer = document.getElementById('my-day-container');
@@ -39,8 +52,10 @@ export async function initMyDaySection() {
 
         loadDayEvent(0);
     } catch (error) {
-        console.error('Failed to load My Day scenarios', error);
-        myDayContainer.innerHTML = `<div class="text-center text-red-500 py-8">We couldn't load the day simulator right now. Please try again later.</div>`;
+        myDayBoundary.capture(error, {
+            message: "We couldn't load the day simulator right now. Please try again later.",
+            context: { scope: 'my-day.load' }
+        });
     } finally {
         eventsLoading = false;
     }

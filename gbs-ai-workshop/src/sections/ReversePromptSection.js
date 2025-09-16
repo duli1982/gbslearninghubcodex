@@ -1,4 +1,26 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
 import { generateContent, buildReversePromptPayload } from '../services/aiService.js';
+
+const reversePromptBoundary = new ErrorBoundary({
+    id: 'reverse-prompt',
+    fallbackMessage: 'Sorry, something went wrong while generating the prompt. Please try again.',
+    renderer: ({ message }) => {
+        const errorContainer = document.getElementById('reverse-prompt-error');
+        if (errorContainer) {
+            errorContainer.textContent = message;
+            errorContainer.classList.remove('hidden');
+        } else if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+            window.alert(message);
+        }
+    },
+    clearRenderer: () => {
+        const errorContainer = document.getElementById('reverse-prompt-error');
+        if (errorContainer) {
+            errorContainer.textContent = '';
+            errorContainer.classList.add('hidden');
+        }
+    }
+});
 
 export function initReversePromptSection() {
     const generateReversePromptBtn = document.getElementById('generateReversePromptBtn');
@@ -21,11 +43,12 @@ export function initReversePromptSection() {
 
         spinner?.classList.remove('hidden');
         outputContainer?.classList.add('hidden');
+        reversePromptBoundary.clear();
         errorContainer?.classList.add('hidden');
 
         try {
             const payload = buildReversePromptPayload(inputText);
-            const result = await generateContent(payload);
+            const result = await generateContent(payload, { boundary: reversePromptBoundary });
             const textOutput = result?.candidates?.[0]?.content?.parts?.[0]?.text;
             if (!textOutput) {
                 throw new Error('Invalid response structure from API.');
@@ -44,15 +67,16 @@ export function initReversePromptSection() {
             }
             outputContainer?.classList.remove('hidden');
         } catch (error) {
-            console.error('Reverse prompt generation failed:', error);
-            if (errorContainer) {
-                if (error?.code === 'ai/missing-api-key') {
-                    errorContainer.textContent = 'The AI service has not been configured. Please contact your administrator.';
-                } else {
-                    errorContainer.textContent = 'Sorry, something went wrong while generating the prompt. Please try again.';
-                }
-                errorContainer.classList.remove('hidden');
+            if (!reversePromptBoundary.hasHandled(error)) {
+                const message = error?.code === 'ai/missing-api-key'
+                    ? 'The AI service has not been configured. Please contact your administrator.'
+                    : 'Sorry, something went wrong while generating the prompt. Please try again.';
+                reversePromptBoundary.capture(error, {
+                    message,
+                    context: { scope: 'reverse-prompt.generate' }
+                });
             }
+            outputContainer?.classList.add('hidden');
         } finally {
             spinner?.classList.add('hidden');
         }

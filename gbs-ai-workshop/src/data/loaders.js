@@ -1,9 +1,31 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
+
 const dataCache = new Map();
+
+const FRIENDLY_MESSAGES = {
+    prompts: "We couldn't load the prompt library right now. Please try again later.",
+    scenarios: "We couldn't load the simulator scenarios right now. Please try again later.",
+    myDayEvents: "We couldn't load the My Day experience right now. Please try again later.",
+    caseStudies: "We couldn't load the case studies right now. Please refresh the page.",
+    opportunityData: "We couldn't load the opportunity framework right now. Please refresh the page.",
+    whySubtitles: "We couldn't load new inspiration right now. Please try again later."
+};
+
+const dataBoundary = new ErrorBoundary({
+    id: 'data-loaders',
+    fallbackMessage: "We couldn't load the workshop content. Please refresh and try again.",
+    renderer: () => {}
+});
 
 function loadData(key, importer) {
     if (!dataCache.has(key)) {
         const promise = importer().catch((error) => {
             dataCache.delete(key);
+            const message = FRIENDLY_MESSAGES[key] || dataBoundary.fallbackMessage;
+            dataBoundary.capture(error, {
+                message,
+                context: { scope: `data.${key}` }
+            });
             throw error;
         });
         dataCache.set(key, promise);

@@ -1,13 +1,29 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
 import { loadCaseStudies } from '../data/loaders.js';
 
 let initialized = false;
 let isLoading = false;
 let caseStudiesData = {};
+let containerElement = null;
+
+const caseStudiesBoundary = new ErrorBoundary({
+    id: 'case-studies-section',
+    fallbackMessage: "We couldn't load case studies right now. Please try again later.",
+    renderer: ({ message }) => {
+        if (containerElement) {
+            containerElement.innerHTML = `<div class="text-center text-red-500 py-8">${message}</div>`;
+        } else if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+            window.alert(message);
+        }
+    }
+});
 
 export async function initCaseStudiesSection() {
     if (initialized || isLoading) return;
     const container = document.getElementById('case-study-container');
     if (!container) return;
+
+    containerElement = container;
 
     isLoading = true;
     container.innerHTML = `<div class="text-center text-gray-500 py-8 animate-pulse">Loading case studies...</div>`;
@@ -52,8 +68,10 @@ export async function initCaseStudiesSection() {
 
         initialized = true;
     } catch (error) {
-        console.error('Failed to load case studies data', error);
-        container.innerHTML = `<div class="text-center text-red-500 py-8">We couldn't load case studies right now. Please try again later.</div>`;
+        caseStudiesBoundary.capture(error, {
+            message: "We couldn't load case studies right now. Please try again later.",
+            context: { scope: 'case-studies.load' }
+        });
     } finally {
         isLoading = false;
     }

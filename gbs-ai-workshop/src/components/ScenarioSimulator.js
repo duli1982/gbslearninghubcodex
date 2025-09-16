@@ -1,9 +1,17 @@
+import { ErrorBoundary } from './common/ErrorBoundary.js';
+
 const DEFAULT_MESSAGES = {
     loading: 'Loading scenarios...',
     error: "We couldn't load scenarios right now. Please try again later.",
     empty: 'No simulator scenarios available yet.',
     completed: "You've completed all scenarios in this category!"
 };
+
+const scenarioSimulatorBoundary = new ErrorBoundary({
+    id: 'scenario-simulator',
+    fallbackMessage: "We couldn't load scenarios right now. Please try again later.",
+    renderer: () => {}
+});
 
 export class ScenarioSimulator {
     constructor({
@@ -21,7 +29,8 @@ export class ScenarioSimulator {
             currentIndex: 0,
             loading: false,
             loaded: false,
-            error: null
+            error: null,
+            errorMessage: ''
         };
 
         this.container = null;
@@ -60,6 +69,8 @@ export class ScenarioSimulator {
 
         this.state.loading = true;
         this.state.error = null;
+        this.state.errorMessage = '';
+        scenarioSimulatorBoundary.clear();
 
         try {
             const scenarios = await this.loadScenariosFn();
@@ -69,8 +80,12 @@ export class ScenarioSimulator {
             this.state.currentIndex = 0;
             this.render();
         } catch (error) {
-            console.error('Failed to load simulator scenarios', error);
+            const friendlyMessage = scenarioSimulatorBoundary.capture(error, {
+                message: "We couldn't load scenarios right now. Please try again later.",
+                context: { scope: 'scenario-simulator.load' }
+            });
             this.state.error = error;
+            this.state.errorMessage = error?.friendlyMessage || friendlyMessage;
             this.renderError();
         } finally {
             this.state.loading = false;
@@ -104,7 +119,8 @@ export class ScenarioSimulator {
 
     renderError() {
         if (!this.container) return;
-        this.container.innerHTML = `<div class="text-center text-red-500 py-8">${this.messages.error}</div>`;
+        const message = this.state.errorMessage || this.messages.error;
+        this.container.innerHTML = `<div class="text-center text-red-500 py-8">${message}</div>`;
     }
 
     renderCategoryMenu() {
