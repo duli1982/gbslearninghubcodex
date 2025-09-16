@@ -1,4 +1,6 @@
 // Global Search Functionality with Site-wide Content Search
+const SEARCH_INDEX_URL = new URL('../../search-index.json', import.meta.url);
+
 class GlobalSearch {
     constructor() {
         this.searchInput = document.getElementById('global-search');
@@ -18,7 +20,7 @@ class GlobalSearch {
 
     async loadSearchIndex() {
         try {
-            const response = await fetch('shared/search-index.json');
+            const response = await fetch(SEARCH_INDEX_URL);
             const data = await response.json();
             this.searchData = data.searchIndex.map(item => ({
                 ...item,
@@ -561,11 +563,11 @@ class GlobalSearch {
 }
 
 // Global function for clear search (used by no results button)
-function clearSearch() {
+window.clearSearch = function clearSearch() {
     if (window.globalSearch) {
         window.globalSearch.clearSearch();
     }
-}
+};
 
 // Initialize search when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
