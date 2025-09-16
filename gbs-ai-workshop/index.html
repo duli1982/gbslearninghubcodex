@@ -121,6 +121,8 @@
 
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
+        <div id="firebase-error" class="hidden mb-6 p-4 bg-red-100 text-red-700 rounded-lg text-center"></div>
+
         <section id="why" class="page-section text-center mb-16 md:mb-24 fade-in">
             <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Reclaim Your Team's Time. Work Smarter, Not Harder.</h1>
             <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
@@ -1419,16 +1421,60 @@
         };
 
         // --- FIREBASE INITIALIZATION ---
+        function displayFirebaseError(message) {
+            console.error(message);
+            const container = document.getElementById('firebase-error');
+            if (container) {
+                container.textContent = message;
+                container.classList.remove('hidden');
+            }
+        }
+
+        function clearFirebaseError() {
+            const container = document.getElementById('firebase-error');
+            if (container) {
+                container.textContent = '';
+                container.classList.add('hidden');
+            }
+        }
+
         async function initFirebase() {
             appId = typeof __app_id !== 'undefined' ? __app_id : 'gbs-gemini-training';
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+            let firebaseConfig = null;
+
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                try {
+                    firebaseConfig = JSON.parse(__firebase_config);
+                } catch (parseError) {
+                    console.error("Failed to parse Firebase config:", parseError);
+                    displayFirebaseError("We couldn't connect to your workspace because the configuration provided is invalid. Please contact your administrator.");
+                    return;
+                }
+            }
 
             if (!firebaseConfig) {
-                console.error("Firebase config not found.");
+                displayFirebaseError("We couldn't connect to your workspace because the training configuration was not provided. Please refresh the page or contact your administrator.");
                 return;
             }
 
-            const app = initializeApp(firebaseConfig);
+            const requiredFields = ['apiKey', 'authDomain', 'projectId'];
+            const missingFields = requiredFields.filter((field) => !firebaseConfig[field]);
+
+            if (missingFields.length > 0) {
+                displayFirebaseError(`We couldn't connect to your workspace because the Firebase configuration is missing: ${missingFields.join(', ')}. Please contact your administrator.`);
+                return;
+            }
+
+            let app;
+            try {
+                app = initializeApp(firebaseConfig);
+            } catch (initializationError) {
+                console.error("Firebase initialization failed:", initializationError);
+                displayFirebaseError("We couldn't connect to your workspace because the Firebase configuration is invalid. Please contact your administrator.");
+                return;
+            }
+
+            clearFirebaseError();
             db = getFirestore(app);
             auth = getAuth(app);
 
