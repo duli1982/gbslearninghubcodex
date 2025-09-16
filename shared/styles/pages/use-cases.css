@@ -1,0 +1,56 @@
+.google-sans {
+    font-family: 'Google Sans', sans-serif;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.use-case-card {
+    border: 1px solid #dadce0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.use-case-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.impact-stat {
+    background: linear-gradient(135deg, #1967d2 0%, #4285f4 100%);
+    color: white;
+}
+
+.category-badge {
+    background: #e8f0fe;
+    color: #1967d2;
+}
+
+.before-after {
+    background: linear-gradient(90deg, #fef7f0 0%, #f0f9ff 100%);
+}
+
+.demo-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e8f0fe 100%);
+}
+
+.category-filter {
+    background: #f1f3f4;
+    color: #5f6368;
+}
+
+.category-filter.active {
+    background: #1967d2;
+    color: white;
+}
+
+.category-filter:hover {
+    background: #e8f0fe;
+    color: #1967d2;
+}
+
+.category-filter.active:hover {
+    background: #1557b0;
+    color: white;
+}

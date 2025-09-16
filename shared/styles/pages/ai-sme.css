@@ -1,0 +1,64 @@
+body {
+    background-color: var(--ai-bg);
+    color: var(--ai-text);
+}
+.nav-link.active {
+    color: var(--ai-accent);
+    font-weight: 600;
+}
+.section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--ai-heading);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.section-subtitle {
+    font-size: 1.125rem;
+    color: var(--ai-text);
+    text-align: center;
+    max-width: 42rem; /* 3xl */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+}
+.card {
+    background-color: var(--ai-card);
+    border-radius: 0.75rem; /* larger radius */
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--ai-border);
+    box-shadow: var(--ai-shadow-sm);
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--ai-shadow-md);
+}
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.btn-primary {
+    background-color: var(--ai-accent);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--ai-accent-hover);
+}
+.btn-secondary {
+    background-color: transparent;
+    color: var(--ai-accent);
+    border: 1px solid var(--ai-accent);
+}
+.btn-secondary:hover {
+    background-color: var(--ai-accent);
+    color: white;
+}
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
