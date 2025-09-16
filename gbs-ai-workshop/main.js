@@ -1,4 +1,4 @@
-import { qs, qsa } from '../shared/scripts/utils/dom-helpers.js';
+import { $, $$ } from '../shared/scripts/utils/dom-helpers.js';
 import { initializeDropdown } from '../shared/scripts/components/dropdown.js';
 import { initializeNavigation } from '../shared/scripts/components/navigation.js';
 import { BackToTop } from '../shared/scripts/gbs-core.js';
@@ -10,7 +10,7 @@ import { BackToTop } from '../shared/scripts/gbs-core.js';
 function initComponents() {
   try {
     // Initialize all dropdowns
-    const dropdownElements = qsa('[data-dropdown]');
+    const dropdownElements = $$('[data-dropdown]');
     dropdownElements.forEach(initializeDropdown);
 
     // Initialize mobile navigation
@@ -19,6 +19,32 @@ function initComponents() {
   } catch (error) {
     console.error("Error initializing core components:", error);
   }
+}
+
+/**
+ * Initializes the back-to-top button functionality.
+ */
+function initBackToTopButton() {
+  const backToTopBtn = $('#back-to-top');
+  if (!backToTopBtn) return; // Exit if the button isn't on the page
+
+  const SCROLL_THRESHOLD = 300;
+
+  const toggleVisibility = () => {
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  backToTopBtn.addEventListener('click', scrollToTop);
+  window.addEventListener('scroll', toggleVisibility, { passive: true });
+  toggleVisibility(); // Initial check on page load
 }
 
 /**

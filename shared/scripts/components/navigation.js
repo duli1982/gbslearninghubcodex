@@ -1,4 +1,4 @@
-import { qs, qsa } from '../utils/dom-helpers.js';
+import { $$, requireElement } from '../utils/dom-helpers.js';
 
 /**
  * A reusable mobile navigation component.
@@ -16,11 +16,11 @@ import { qs, qsa } from '../utils/dom-helpers.js';
  */
 export function initializeNavigation() {
   try {
-    const openBtn = qs('[data-mobile-menu-button]', { required: true });
-    const menu = qs('[data-mobile-menu]', { required: true });
-    const overlay = qs('[data-mobile-menu-overlay]', { required: true });
-    const closeBtn = qs('[data-mobile-menu-close]', { required: true });
-    const menuItems = qsa('[data-mobile-menu-item]', menu);
+    const openBtn = requireElement('[data-mobile-menu-button]');
+    const menu = requireElement('[data-mobile-menu]');
+    const overlay = requireElement('[data-mobile-menu-overlay]');
+    const closeBtn = requireElement('[data-mobile-menu-close]');
+    const menuItems = $$('[data-mobile-menu-item]', menu);
 
     /**
      * Opens the mobile menu and overlay.
