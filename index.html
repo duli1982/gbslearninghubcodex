@@ -561,29 +561,48 @@
             }
 
             displaySearchResults(results, query) {
-                this.searchResultsContent.innerHTML = '';
+                this.searchResultsContent.textContent = '';
 
                 if (results.length === 0) {
-                    this.searchResultsContent.innerHTML = `
-                        <div class="search-result-item">
-                            <div class="search-result-title">No results found for "${query}"</div>
-                            <div class="search-result-description">Try different keywords like "prompts", "resume", "sourcing", or "training"</div>
-                        </div>
-                    `;
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+
+                    const title = document.createElement('div');
+                    title.className = 'search-result-title';
+                    title.textContent = `No results found for "${query}"`;
+                    resultItem.appendChild(title);
+
+                    const description = document.createElement('div');
+                    description.className = 'search-result-description';
+                    description.textContent = 'Try different keywords like "prompts", "resume", "sourcing", or "training"';
+                    resultItem.appendChild(description);
+
+                    this.searchResultsContent.appendChild(resultItem);
                 } else {
                     // Show top 8 results with better categorization
                     const topResults = results.slice(0, 8);
 
                     // Group results by type for better organization
                     const groupedResults = this.groupResultsByType(topResults);
+                    const groupCount = Object.keys(groupedResults).length;
 
                     Object.entries(groupedResults).forEach(([type, items]) => {
                         if (items.length > 0) {
                             // Add type header for multiple types
-                            if (Object.keys(groupedResults).length > 1 && items.length > 1) {
+                            if (groupCount > 1 && items.length > 1) {
                                 const header = document.createElement('div');
                                 header.className = 'search-result-header';
-                                header.innerHTML = `<div style="padding: 8px 16px; background: #f8fafc; font-weight: 600; font-size: 12px; color: #6b7280; text-transform: uppercase;">${this.getTypeDisplayName(type)}</div>`;
+
+                                const headerContent = document.createElement('div');
+                                headerContent.style.padding = '8px 16px';
+                                headerContent.style.background = '#f8fafc';
+                                headerContent.style.fontWeight = '600';
+                                headerContent.style.fontSize = '12px';
+                                headerContent.style.color = '#6b7280';
+                                headerContent.style.textTransform = 'uppercase';
+                                headerContent.textContent = this.getTypeDisplayName(type);
+
+                                header.appendChild(headerContent);
                                 this.searchResultsContent.appendChild(header);
                             }
 
@@ -638,34 +657,76 @@
             }
 
             createSearchResultElement(result, query) {
-                const div = document.createElement('div');
-                div.className = 'search-result-item';
+                const container = document.createElement('div');
+                container.className = 'search-result-item';
 
-                const highlightedTitle = this.highlightText(result.title, query);
-                const highlightedDescription = this.highlightText(result.description, query);
+                const titleElement = document.createElement('div');
+                titleElement.className = 'search-result-title';
+                this.setHighlightedText(titleElement, result.title || '', query);
+                container.appendChild(titleElement);
 
-                // Section title display
-                const sectionDisplay = result.sectionTitle
-                    ? `<div class="search-result-section" style="font-size: 12px; color: #1967d2; font-weight: 500; margin-top: 4px;">↳ In: ${this.highlightText(result.sectionTitle, query)}</div>`
-                    : '';
+                const descriptionElement = document.createElement('div');
+                descriptionElement.className = 'search-result-description';
+                this.setHighlightedText(descriptionElement, result.description || '', query);
+                container.appendChild(descriptionElement);
 
-                div.innerHTML = `
-                    <div class="search-result-title">${highlightedTitle}</div>
-                    <div class="search-result-description">${highlightedDescription}</div>
-                    ${sectionDisplay}
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
-                        <span class="search-result-category">${result.category || this.getCategoryFromUrl(result.url)}</span>
-                        ${result.type === 'lesson' ? '<span style="font-size: 11px; color: #9ca3af;">📚 Lesson</span>' : ''}
-                        ${result.type === 'prompt-category' ? '<span style="font-size: 11px; color: #9ca3af;">🎯 Prompts</span>' : ''}
-                        ${result.type === 'use-case' ? '<span style="font-size: 11px; color: #9ca3af;">📈 Case Study</span>' : ''}
-                    </div>
-                `;
+                if (result.sectionTitle) {
+                    const sectionElement = document.createElement('div');
+                    sectionElement.className = 'search-result-section';
+                    sectionElement.style.fontSize = '12px';
+                    sectionElement.style.color = '#1967d2';
+                    sectionElement.style.fontWeight = '500';
+                    sectionElement.style.marginTop = '4px';
+                    sectionElement.appendChild(document.createTextNode('↳ In: '));
+                    this.appendHighlightedText(sectionElement, result.sectionTitle, query);
+                    container.appendChild(sectionElement);
+                }
 
-                div.addEventListener('click', () => {
+                const metaRow = document.createElement('div');
+                metaRow.style.display = 'flex';
+                metaRow.style.justifyContent = 'space-between';
+                metaRow.style.alignItems = 'center';
+                metaRow.style.marginTop = '4px';
+
+                const categorySpan = document.createElement('span');
+                categorySpan.className = 'search-result-category';
+                categorySpan.textContent = result.category || this.getCategoryFromUrl(result.url);
+                metaRow.appendChild(categorySpan);
+
+                const typeLabels = {
+                    'lesson': '📚 Lesson',
+                    'prompt-category': '🎯 Prompts',
+                    'use-case': '📈 Case Study'
+                };
+
+                const typeLabel = typeLabels[result.type];
+                if (typeLabel) {
+                    const typeSpan = document.createElement('span');
+                    typeSpan.style.fontSize = '11px';
+                    typeSpan.style.color = '#9ca3af';
+                    typeSpan.textContent = typeLabel;
+                    metaRow.appendChild(typeSpan);
+                }
+
+                container.appendChild(metaRow);
+
+                container.addEventListener('click', () => {
                     this.handleResultClick(result);
                 });
 
-                return div;
+                return container;
+            }
+
+            setHighlightedText(element, text, query) {
+                element.textContent = '';
+                this.appendHighlightedText(element, text, query);
+            }
+
+            appendHighlightedText(element, text, query) {
+                const fragment = this.highlightText(text, query);
+                if (fragment) {
+                    element.appendChild(fragment);
+                }
             }
 
             handleResultClick(result) {
@@ -676,9 +737,41 @@
             }
 
             highlightText(text, query) {
-                if (!query) return text;
-                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                return text.replace(regex, '<span class="search-highlight">$1</span>');
+                const fragment = document.createDocumentFragment();
+                const safeText = typeof text === 'string' ? text : (text ?? '');
+
+                if (!query) {
+                    fragment.appendChild(document.createTextNode(safeText));
+                    return fragment;
+                }
+
+                const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(escapedQuery, 'gi');
+                let lastIndex = 0;
+                let match;
+
+                while ((match = regex.exec(safeText)) !== null) {
+                    if (match.index > lastIndex) {
+                        fragment.appendChild(document.createTextNode(safeText.slice(lastIndex, match.index)));
+                    }
+
+                    const highlightSpan = document.createElement('span');
+                    highlightSpan.className = 'search-highlight';
+                    highlightSpan.textContent = match[0];
+                    fragment.appendChild(highlightSpan);
+
+                    lastIndex = match.index + match[0].length;
+                }
+
+                if (lastIndex < safeText.length) {
+                    fragment.appendChild(document.createTextNode(safeText.slice(lastIndex)));
+                }
+
+                if (!fragment.hasChildNodes()) {
+                    fragment.appendChild(document.createTextNode(safeText));
+                }
+
+                return fragment;
             }
 
             getCategoryFromUrl(url) {
@@ -755,22 +848,31 @@
                 const title = card.querySelector('h3');
                 const description = card.querySelector('p');
 
-                if (!title.getAttribute('data-original')) {
-                    title.setAttribute('data-original', title.innerHTML);
-                    description.setAttribute('data-original', description.innerHTML);
+                if (title) {
+                    if (!title.dataset.originalText) {
+                        title.dataset.originalText = title.textContent || '';
+                    }
+                    this.setHighlightedText(title, title.dataset.originalText, query);
                 }
 
-                title.innerHTML = this.highlightText(title.getAttribute('data-original'), query);
-                description.innerHTML = this.highlightText(description.getAttribute('data-original'), query);
+                if (description) {
+                    if (!description.dataset.originalText) {
+                        description.dataset.originalText = description.textContent || '';
+                    }
+                    this.setHighlightedText(description, description.dataset.originalText, query);
+                }
             }
 
             removeCardHighlights(card) {
                 const title = card.querySelector('h3');
                 const description = card.querySelector('p');
 
-                if (title.getAttribute('data-original')) {
-                    title.innerHTML = title.getAttribute('data-original');
-                    description.innerHTML = description.getAttribute('data-original');
+                if (title && title.dataset.originalText) {
+                    title.textContent = title.dataset.originalText;
+                }
+
+                if (description && description.dataset.originalText) {
+                    description.textContent = description.dataset.originalText;
                 }
             }
 
