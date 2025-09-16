@@ -91,6 +91,10 @@ body {
     color: #4A90E2;
 }
 
+.modal-content {
+    max-width: 700px;
+}
+
 .hidden {
     display: none;
 }
