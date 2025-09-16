@@ -1,20 +1,55 @@
-import { myDayEvents } from '../data/myDayEvents.js';
+import { loadMyDayEvents } from '../data/loaders.js';
 
 let myDayContainer;
 let currentDayEventIndex = 0;
+let myDayEventsData = [];
+let eventsLoaded = false;
+let eventsLoading = false;
+let hasSetup = false;
 
-export function initMyDaySection() {
+export async function initMyDaySection() {
     myDayContainer = document.getElementById('my-day-container');
     if (!myDayContainer) return;
 
-    myDayContainer.addEventListener('click', handleDayClick);
-    loadDayEvent(0);
+    if (!hasSetup) {
+        myDayContainer.addEventListener('click', handleDayClick);
+        hasSetup = true;
+    }
+
+    if (eventsLoaded) {
+        currentDayEventIndex = 0;
+        loadDayEvent(0);
+        return;
+    }
+
+    if (eventsLoading) return;
+
+    eventsLoading = true;
+    currentDayEventIndex = 0;
+    myDayContainer.innerHTML = `<div class="text-center text-gray-500 py-8 animate-pulse">Loading your AI-powered day...</div>`;
+
+    try {
+        myDayEventsData = await loadMyDayEvents();
+        eventsLoaded = true;
+
+        if (!myDayEventsData.length) {
+            myDayContainer.innerHTML = `<div class="text-center text-gray-500 py-8">No daily scenarios available yet.</div>`;
+            return;
+        }
+
+        loadDayEvent(0);
+    } catch (error) {
+        console.error('Failed to load My Day scenarios', error);
+        myDayContainer.innerHTML = `<div class="text-center text-red-500 py-8">We couldn't load the day simulator right now. Please try again later.</div>`;
+    } finally {
+        eventsLoading = false;
+    }
 }
 
 function loadDayEvent(index) {
     if (!myDayContainer) return;
 
-    if (index >= myDayEvents.length) {
+    if (index >= myDayEventsData.length) {
         myDayContainer.innerHTML = `
             <p class="text-center text-gray-600 text-2xl font-bold">You've completed your day!</p>
             <p class="text-center text-gray-500 mt-4">You've seen how a few smart prompts can save hours of work. You're ready to start integrating AI into your real workflow.</p>
@@ -25,7 +60,7 @@ function loadDayEvent(index) {
         return;
     }
 
-    const event = myDayEvents[index];
+    const event = myDayEventsData[index];
     const optionsHtml = event.options.map((option, optionIndex) => `
         <div class="scenario-option p-4 rounded-lg cursor-pointer" data-index="${optionIndex}">
             <p class="font-semibold">${option.text}</p>
@@ -49,7 +84,8 @@ function handleDayClick(event) {
     const optionElement = event.target.closest('.scenario-option');
     if (optionElement && !optionElement.classList.contains('selected')) {
         const selectedIndex = parseInt(optionElement.getAttribute('data-index') || '0', 10);
-        const eventData = myDayEvents[currentDayEventIndex];
+        const eventData = myDayEventsData[currentDayEventIndex];
+        if (!eventData) return;
         const selectedOption = eventData.options[selectedIndex];
 
         const allOptions = myDayContainer.querySelectorAll('.scenario-option');

@@ -1,20 +1,55 @@
-import { scenarios } from '../data/scenarios.js';
+import { loadScenarios } from '../data/loaders.js';
 
 let simulatorContainer;
 let currentScenarioCategory = null;
 let currentScenarioIndex = 0;
+let scenariosData = {};
+let scenariosLoaded = false;
+let scenariosLoading = false;
+let hasSetup = false;
 
-export function initSimulatorSection() {
+export async function initSimulatorSection() {
     simulatorContainer = document.getElementById('simulator-container');
     if (!simulatorContainer) return;
 
-    simulatorContainer.addEventListener('click', handleSimulatorClick);
-    displayCategoryMenu();
+    if (!hasSetup) {
+        simulatorContainer.addEventListener('click', handleSimulatorClick);
+        hasSetup = true;
+    }
+
+    if (scenariosLoaded) {
+        displayCategoryMenu();
+        return;
+    }
+
+    if (scenariosLoading) return;
+
+    scenariosLoading = true;
+    simulatorContainer.innerHTML = `<div class="text-center text-gray-500 py-8 animate-pulse">Loading scenarios...</div>`;
+
+    try {
+        scenariosData = await loadScenarios();
+        scenariosLoaded = true;
+        displayCategoryMenu();
+    } catch (error) {
+        console.error('Failed to load simulator scenarios', error);
+        simulatorContainer.innerHTML = `<div class="text-center text-red-500 py-8">We couldn't load scenarios right now. Please try again later.</div>`;
+    } finally {
+        scenariosLoading = false;
+    }
 }
 
 function displayCategoryMenu() {
     if (!simulatorContainer) return;
-    const categories = Object.keys(scenarios);
+    currentScenarioCategory = null;
+    currentScenarioIndex = 0;
+    const categories = Object.keys(scenariosData ?? {});
+
+    if (!categories.length) {
+        simulatorContainer.innerHTML = `<div class="text-center text-gray-500 py-8">No simulator scenarios available yet.</div>`;
+        return;
+    }
+
     const categoryHtml = categories.map((category) => `
         <div class="category-option p-6 rounded-lg cursor-pointer text-center" data-category="${category}">
             <h3 class="font-bold text-xl text-[#4A90E2]">${category}</h3>
@@ -29,7 +64,7 @@ function displayCategoryMenu() {
 
 function loadScenario() {
     if (!simulatorContainer || !currentScenarioCategory) return;
-    const scenarioList = scenarios[currentScenarioCategory];
+    const scenarioList = scenariosData[currentScenarioCategory];
     const scenario = scenarioList?.[currentScenarioIndex];
 
     if (!scenario) {
@@ -82,7 +117,7 @@ function handleSimulatorClick(event) {
     const optionElement = event.target.closest('.scenario-option');
     if (optionElement && !optionElement.classList.contains('selected')) {
         const selectedIndex = parseInt(optionElement.getAttribute('data-index') || '0', 10);
-        const scenario = scenarios[currentScenarioCategory]?.[currentScenarioIndex];
+        const scenario = scenariosData[currentScenarioCategory]?.[currentScenarioIndex];
         if (!scenario) return;
 
         const selectedPrompt = scenario.prompts[selectedIndex];

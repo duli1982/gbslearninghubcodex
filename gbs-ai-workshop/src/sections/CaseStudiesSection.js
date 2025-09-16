@@ -1,49 +1,69 @@
-import { caseStudies } from '../data/caseStudies.js';
+import { loadCaseStudies } from '../data/loaders.js';
 
 let initialized = false;
+let isLoading = false;
+let caseStudiesData = {};
 
-export function initCaseStudiesSection() {
-    if (initialized) return;
+export async function initCaseStudiesSection() {
+    if (initialized || isLoading) return;
     const container = document.getElementById('case-study-container');
     if (!container) return;
 
-    const tabs = document.createElement('nav');
-    tabs.id = 'case-study-tabs';
-    tabs.className = '-mb-px flex space-x-8';
-    tabs.setAttribute('aria-label', 'Tabs');
+    isLoading = true;
+    container.innerHTML = `<div class="text-center text-gray-500 py-8 animate-pulse">Loading case studies...</div>`;
 
-    const content = document.createElement('div');
-    content.id = 'case-study-content';
-    content.className = 'mt-8';
+    try {
+        caseStudiesData = await loadCaseStudies();
+        const categories = Object.keys(caseStudiesData ?? {});
 
-    container.innerHTML = '';
-    container.appendChild(tabs);
-    container.appendChild(content);
+        if (!categories.length) {
+            container.innerHTML = `<div class="text-center text-gray-500 py-8">No case studies available yet.</div>`;
+            initialized = true;
+            return;
+        }
 
-    const categories = Object.keys(caseStudies);
-    tabs.innerHTML = categories.map((category, index) => `
-        <button class="case-study-tab ${index === 0 ? 'active' : ''}" data-category="${category}">${category}</button>
-    `).join('');
+        const tabs = document.createElement('nav');
+        tabs.id = 'case-study-tabs';
+        tabs.className = '-mb-px flex space-x-8';
+        tabs.setAttribute('aria-label', 'Tabs');
 
-    loadCaseStudy(categories[0]);
+        const content = document.createElement('div');
+        content.id = 'case-study-content';
+        content.className = 'mt-8';
 
-    tabs.addEventListener('click', (event) => {
-        const tab = event.target.closest('.case-study-tab');
-        if (!tab) return;
+        container.innerHTML = '';
+        container.appendChild(tabs);
+        container.appendChild(content);
 
-        document.querySelectorAll('.case-study-tab').forEach((button) => button.classList.remove('active'));
-        tab.classList.add('active');
-        loadCaseStudy(tab.getAttribute('data-category'));
-    });
+        tabs.innerHTML = categories.map((category, index) => `
+            <button class="case-study-tab ${index === 0 ? 'active' : ''}" data-category="${category}">${category}</button>
+        `).join('');
 
-    initialized = true;
+        loadCaseStudy(categories[0]);
+
+        tabs.addEventListener('click', (event) => {
+            const tab = event.target.closest('.case-study-tab');
+            if (!tab) return;
+
+            document.querySelectorAll('.case-study-tab').forEach((button) => button.classList.remove('active'));
+            tab.classList.add('active');
+            loadCaseStudy(tab.getAttribute('data-category'));
+        });
+
+        initialized = true;
+    } catch (error) {
+        console.error('Failed to load case studies data', error);
+        container.innerHTML = `<div class="text-center text-red-500 py-8">We couldn't load case studies right now. Please try again later.</div>`;
+    } finally {
+        isLoading = false;
+    }
 }
 
 function loadCaseStudy(category) {
     const content = document.getElementById('case-study-content');
     if (!content) return;
 
-    const steps = caseStudies[category] ?? [];
+    const steps = caseStudiesData?.[category] ?? [];
     const stepsHtml = steps.map((step, index) => `
         <div class="timeline-step bg-white p-6 rounded-lg shadow-sm">
             <h4 class="font-bold text-lg text-[#4A90E2] mb-2">Step ${index + 1}: ${step.title}</h4>
@@ -52,6 +72,11 @@ function loadCaseStudy(category) {
         </div>
         ${index < steps.length - 1 ? '<div class="timeline-connector"></div>' : ''}
     `).join('');
+
+    if (steps.length === 0) {
+        content.innerHTML = `<div class="text-center text-gray-500 py-8">No case studies available for this category.</div>`;
+        return;
+    }
 
     content.innerHTML = `<div class="timeline-container">${stepsHtml}</div>`;
 }
