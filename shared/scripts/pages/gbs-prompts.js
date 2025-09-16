@@ -1,31 +1,11 @@
+import { BackToTop } from '../gbs-core.js';
+
 // --- DATA STRUCTURE ---
 let promptData = {};
 let allPrompts = [];
 let lastScrollPosition = 0;
 
-// --- SCROLL TO TOP FUNCTIONALITY ---
-const scrollToTopBtn = document.getElementById('scroll-to-top');
-
-// Show/hide scroll to top button based on scroll position
-function toggleScrollToTopButton() {
-    if (window.pageYOffset > 300) {
-        scrollToTopBtn.classList.add('visible');
-    } else {
-        scrollToTopBtn.classList.remove('visible');
-    }
-}
-
-// Smooth scroll to top
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// Event listeners for scroll to top
-window.addEventListener('scroll', toggleScrollToTopButton);
-scrollToTopBtn.addEventListener('click', scrollToTop);
+new BackToTop();
 
 /**
  * Flattens the prompt data into a single array for easier searching.
