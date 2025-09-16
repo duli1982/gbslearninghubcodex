@@ -18,7 +18,7 @@ class GlobalSearch {
 
     async loadSearchIndex() {
         try {
-            const response = await fetch('/shared/search-index.json');
+            const response = await fetch('shared/search-index.json');
             const data = await response.json();
             this.searchData = data.searchIndex.map(item => ({
                 ...item,
