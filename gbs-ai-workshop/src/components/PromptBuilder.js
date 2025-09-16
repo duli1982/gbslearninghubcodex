@@ -1,4 +1,12 @@
+import { ErrorBoundary } from './common/ErrorBoundary.js';
+
 const DEFAULT_BUTTON_RESET_DELAY = 2000;
+
+const promptBuilderBoundary = new ErrorBoundary({
+    id: 'prompt-builder',
+    fallbackMessage: 'We ran into an issue with the prompt builder. Please try again.',
+    renderer: () => {}
+});
 
 export class PromptBuilder {
     constructor({
@@ -124,7 +132,10 @@ export class PromptBuilder {
                 }, DEFAULT_BUTTON_RESET_DELAY);
             }
         } catch (error) {
-            console.error('Failed to save prompt to library', error);
+            promptBuilderBoundary.capture(error, {
+                message: 'We couldn\'t save that prompt to your library. Please try again.',
+                context: { scope: 'prompt-builder.save' }
+            });
             if (button) {
                 button.textContent = 'Try Again';
                 setTimeout(() => {
@@ -144,7 +155,10 @@ export class PromptBuilder {
         if (typeof navigator === 'undefined'
             || !navigator.clipboard
             || typeof navigator.clipboard.writeText !== 'function') {
-            console.error('Clipboard API is not available in this browser.');
+            promptBuilderBoundary.capture(new Error('Clipboard API is not available in this browser.'), {
+                message: 'Copying prompts is not available in this browser. Please copy the text manually.',
+                context: { scope: 'prompt-builder.copy', reason: 'clipboard-unavailable' }
+            });
             return;
         }
 
@@ -156,7 +170,10 @@ export class PromptBuilder {
                 }, DEFAULT_BUTTON_RESET_DELAY);
             }
         }).catch((error) => {
-            console.error('Failed to copy text:', error);
+            promptBuilderBoundary.capture(error, {
+                message: 'We couldn\'t copy that prompt. Please try again or copy it manually.',
+                context: { scope: 'prompt-builder.copy' }
+            });
         });
     }
 

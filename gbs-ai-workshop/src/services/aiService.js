@@ -1,5 +1,12 @@
+import { ErrorBoundary } from "../components/common/ErrorBoundary.js";
+
 const DEFAULT_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 const DEFAULT_MODEL = "gemini-2.0-flash";
+
+const aiBoundary = new ErrorBoundary({
+    id: 'ai-service',
+    fallbackMessage: "We couldn't reach the AI service right now. Please try again later."
+});
 
 let cachedEnvironment = null;
 
@@ -57,50 +64,76 @@ function buildRequestUrl(config) {
 }
 
 export async function generateContent(promptOrPayload, options = {}) {
-    const config = getAiConfig();
-    const url = buildRequestUrl(config);
+    const {
+        boundary: boundaryOption,
+        fetchImpl: providedFetch,
+        headers: customHeaders,
+        signal
+    } = options;
 
-    const fetchImpl = options.fetchImpl || (typeof fetch === "function" ? fetch : null);
-    if (typeof fetchImpl !== "function") {
-        throw new Error("A fetch implementation is required to call the AI service.");
-    }
+    const boundary = boundaryOption && typeof boundaryOption.capture === 'function'
+        ? boundaryOption
+        : aiBoundary;
 
-    const payload = typeof promptOrPayload === "string"
-        ? { contents: [{ role: "user", parts: [{ text: promptOrPayload }]}] }
-        : promptOrPayload;
+    try {
+        const config = getAiConfig();
+        const url = buildRequestUrl(config);
 
-    if (!payload || typeof payload !== "object") {
-        throw new Error("A valid payload must be provided to the AI service.");
-    }
-
-    const response = await fetchImpl(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            ...(options.headers || {})
-        },
-        body: JSON.stringify(payload),
-        signal: options.signal
-    });
-
-    if (!response.ok) {
-        let errorBody = null;
-        try {
-            errorBody = await response.text();
-        } catch (readError) {
-            // Ignore body read errors and fall back to status message only.
+        const fetchImpl = providedFetch || (typeof fetch === "function" ? fetch : null);
+        if (typeof fetchImpl !== "function") {
+            throw new Error("A fetch implementation is required to call the AI service.");
         }
 
-        const error = new Error(`AI request failed with status ${response.status}`);
-        error.status = response.status;
-        error.statusText = response.statusText;
-        if (errorBody) {
-            error.body = errorBody;
+        const payload = typeof promptOrPayload === "string"
+            ? { contents: [{ role: "user", parts: [{ text: promptOrPayload }]}] }
+            : promptOrPayload;
+
+        if (!payload || typeof payload !== "object") {
+            throw new Error("A valid payload must be provided to the AI service.");
         }
+
+        const response = await fetchImpl(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...(customHeaders || {})
+            },
+            body: JSON.stringify(payload),
+            signal
+        });
+
+        if (!response.ok) {
+            let errorBody = null;
+            try {
+                errorBody = await response.text();
+            } catch (readError) {
+                // Ignore body read errors and fall back to status message only.
+            }
+
+            const error = new Error(`AI request failed with status ${response.status}`);
+            error.status = response.status;
+            error.statusText = response.statusText;
+            if (errorBody) {
+                error.body = errorBody;
+            }
+            throw error;
+        }
+
+        const result = await response.json();
+        boundary.clear();
+        return result;
+    } catch (error) {
+        const friendlyMessage = error?.code === 'ai/missing-api-key'
+            ? 'The AI service has not been configured. Please contact your administrator.'
+            : "We couldn't reach the AI service right now. Please try again later.";
+
+        boundary.capture(error, {
+            message: friendlyMessage,
+            context: { scope: 'ai.generateContent' }
+        });
+
         throw error;
     }
-
-    return response.json();
 }
 
 export function buildReversePromptPayload(inputText) {

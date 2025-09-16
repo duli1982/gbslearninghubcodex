@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '../components/common/ErrorBoundary.js';
 import { loadPromptsData } from '../data/loaders.js';
 import { onLibraryChange, removePromptFromLibrary } from '../services/firebaseService.js';
 
@@ -11,6 +12,13 @@ let promptsLoaded = false;
 let promptsLoading = false;
 let promptsLoadError = null;
 let isInitialized = false;
+let promptsLoadErrorMessage = '';
+
+const myLibraryBoundary = new ErrorBoundary({
+    id: 'my-library-section',
+    fallbackMessage: 'Unable to load your saved prompts right now. Please try again later.',
+    renderer: () => {}
+});
 
 export function initMyLibrarySection() {
     if (isInitialized) return;
@@ -66,18 +74,19 @@ function renderLibrary() {
         noCustomMessage?.classList.remove('hidden');
     }
 
-    if (favoritePrompts.length) {
-        if (!promptsLoaded && !promptsLoading) {
-            void loadPrompts();
-        }
+        if (favoritePrompts.length) {
+            if (!promptsLoaded && !promptsLoading) {
+                void loadPrompts();
+            }
 
-        noFavoriteMessage?.classList.add('hidden');
-        favoriteList.classList.remove('hidden');
+            noFavoriteMessage?.classList.add('hidden');
+            favoriteList.classList.remove('hidden');
 
-        if (promptsLoadError) {
-            favoriteList.innerHTML = `<div class="col-span-full text-center text-red-500 py-4">Unable to load your saved prompts right now.</div>`;
-            return;
-        }
+            if (promptsLoadError) {
+                const message = promptsLoadErrorMessage || 'Unable to load your saved prompts right now.';
+                favoriteList.innerHTML = `<div class="col-span-full text-center text-red-500 py-4">${message}</div>`;
+                return;
+            }
 
         if (!promptsLoaded) {
             favoriteList.innerHTML = `<div class="col-span-full text-center text-gray-500 py-4 animate-pulse">Loading your saved prompts...</div>`;
@@ -138,13 +147,19 @@ async function loadPrompts() {
     if (promptsLoaded || promptsLoading) return;
     promptsLoading = true;
     promptsLoadError = null;
+    promptsLoadErrorMessage = '';
+    myLibraryBoundary.clear();
 
     try {
         promptsData = await loadPromptsData();
         promptsLoaded = true;
     } catch (error) {
         promptsLoadError = error;
-        console.error('Failed to load prompts for library favorites', error);
+        const friendlyMessage = myLibraryBoundary.capture(error, {
+            message: 'Unable to load your saved prompts right now. Please try again later.',
+            context: { scope: 'my-library.prompts' }
+        });
+        promptsLoadErrorMessage = error?.friendlyMessage || friendlyMessage;
     } finally {
         promptsLoading = false;
         renderLibrary();

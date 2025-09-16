@@ -1,3 +1,4 @@
+import { ErrorBoundary } from './src/components/common/ErrorBoundary.js';
 import { initFirebase } from './src/services/firebaseService.js';
 import { initNavigation } from './src/sections/Navigation.js';
 import { initWhySection } from './src/sections/WhySection.js';
@@ -11,19 +12,26 @@ import { initMyDaySection } from './src/sections/MyDaySection.js';
 import { initCaseStudiesSection } from './src/sections/CaseStudiesSection.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const showFirebaseError = (message) => {
-        const container = document.getElementById('firebase-error');
-        if (!container) return;
-        container.textContent = message;
-        container.classList.remove('hidden');
-    };
-
-    const clearFirebaseError = () => {
-        const container = document.getElementById('firebase-error');
-        if (!container) return;
-        container.textContent = '';
-        container.classList.add('hidden');
-    };
+    const firebaseErrorBoundary = new ErrorBoundary({
+        id: 'firebase-ui',
+        fallbackMessage: 'We couldn\'t connect to your workspace. Please try again later.',
+        renderer: ({ message }) => {
+            const container = document.getElementById('firebase-error');
+            if (container) {
+                container.textContent = message;
+                container.classList.remove('hidden');
+            } else if (typeof window !== 'undefined' && typeof window.alert === 'function') {
+                window.alert(message);
+            }
+        },
+        clearRenderer: () => {
+            const container = document.getElementById('firebase-error');
+            if (container) {
+                container.textContent = '';
+                container.classList.add('hidden');
+            }
+        }
+    });
 
     const navigation = initNavigation({
         sectionInitializers: {
@@ -39,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    await initFirebase({ onError: showFirebaseError, onClear: clearFirebaseError });
+    await initFirebase({ boundary: firebaseErrorBoundary });
 
     navigation?.refresh();
 });

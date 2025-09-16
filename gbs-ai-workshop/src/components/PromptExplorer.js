@@ -1,9 +1,17 @@
+import { ErrorBoundary } from './common/ErrorBoundary.js';
+
 const DEFAULT_MESSAGES = {
     loading: 'Loading prompts...',
     empty: 'No prompts available.',
     emptyFilter: 'No prompts found for this filter.',
     error: 'Unable to load prompts right now.'
 };
+
+const promptExplorerBoundary = new ErrorBoundary({
+    id: 'prompt-explorer',
+    fallbackMessage: 'We couldn\'t load prompts right now. Please try again later.',
+    renderer: () => {}
+});
 
 export class PromptExplorer {
     constructor({
@@ -29,7 +37,8 @@ export class PromptExplorer {
             filter: 'All',
             loading: false,
             loaded: false,
-            error: null
+            error: null,
+            errorMessage: ''
         };
 
         this.initialized = false;
@@ -100,14 +109,20 @@ export class PromptExplorer {
 
         this.state.loading = true;
         this.state.error = null;
+        this.state.errorMessage = '';
+        promptExplorerBoundary.clear();
 
         try {
             const prompts = await this.loadPromptsFn();
             this.state.prompts = Array.isArray(prompts) ? prompts : [];
             this.state.loaded = true;
         } catch (error) {
-            console.error('Failed to load prompts data', error);
+            const friendlyMessage = promptExplorerBoundary.capture(error, {
+                message: 'We couldn\'t load prompts right now. Please try again later.',
+                context: { scope: 'prompt-explorer.load' }
+            });
             this.state.error = error;
+            this.state.errorMessage = error?.friendlyMessage || friendlyMessage;
         } finally {
             this.state.loading = false;
             this.render();
@@ -164,7 +179,8 @@ export class PromptExplorer {
         if (!this.container) return;
 
         if (this.state.error) {
-            this.container.innerHTML = `<div class="col-span-full text-center text-red-500 py-8">${this.messages.error}</div>`;
+            const message = this.state.errorMessage || this.messages.error;
+            this.container.innerHTML = `<div class="col-span-full text-center text-red-500 py-8">${message}</div>`;
             return;
         }
 
